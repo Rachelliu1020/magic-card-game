@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Magic Cards/gameover</title>
+<link rel="stylesheet" href="game.css">
+<script>
+var ctx; 
+var canvas; 
+function drawPage(){
+	canvas = document.getElementById("myCav");
+	ctx = canvas.getContext("2d");
+	document.body.appendChild(canvas);
+	//background image;
+    backgroundImage=new Image();
+	backgroundImage.src="image/background0.png";
+	ctx.drawImage(backgroundImage, 0, 0);
+
+	//game over
+	rules=new Image();
+	rules.src="image/rules.png";
+	ctx.drawImage(rules, 0, 20);
+	
+	ctx.font="30px Comic Sans MS";
+    ctx.fillStyle = "#01294d";
+	ctx.textAlign = "center";
+	ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
+	ctx.font="25px Comic Sans MS";
+	
+	var score=decodeURIComponent(location.search.substr(location.search.indexOf("scores=")+7)); 
+	
+	ctx.fillText("your score:"+score, canvas.width/2, canvas.height/2+30);
+	
+	  
+	//start button
+	buttonX=60;
+	buttonY=400;
+	buttonWidth=192;
+	buttonHeight=52;
+	startButton=new Image();
+	startButton.src="image/startButton.png";
+	ctx.drawImage(startButton, buttonX, buttonY);
+	
+	//button listener
+	canvas.addEventListener('click', clickButton, false);
+	
+	/*card = new Image();
+	card.src="magic_card2.gif";
+	bomb = new Image();
+	bomb.src="bomb.gif";
+	
+	ctx.drawImage(card, 5, 50);*/
+	
+}
+function clickButton(ev){
+var mx; 
+var my; 
+
+var i; 
+
+if (ev.layerX || ev.layerX == 0) { // Firefox 
+mx = ev.layerX; 
+my = ev.layerY; 
+} else if (ev.offsetX || ev.offsetX == 0) { // Opera 
+mx = ev.offsetX; 
+my = ev.offsetY; 
+} 
+if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
+		{ 
+	window.location.href="game.html";
+	}
+
+}
+
+</script>
+</head>
+
+<body onload="drawPage()">
+
+<canvas id="myCav" width="320" height="480"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+<div id="images">
+
+<img src="image/rules.png" width="30" height="30">
+
+<img src="image/startButton.png" width="30" height="30">
+<img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
+</div>
+</body>
+
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>game</title>
+<link rel="stylesheet" href="game.css">
+
+<script>
+var ctx; 
+var canvas;
+var backCard; 
+var card; 
+var isPassed = true; //not click  
+var first_card = -1; 
+var second_card; 
+
+var matrix = [];  
+//var firstX = 20; 
+//var firstY = 100; 
+var firstX = 25;
+var firstY = 80; 
+var margin = 4; 
+var cardWidth = 50; 
+var cardHeight = 50;
+var score=0;
+var minuts=0; 
+var second=0;
+var pictures = [ 
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/iconbomb0.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+"image/icon06.png","image/icon06.png",
+]; 
+
+//draw cards' back sides
+function draw_back() 
+{ 
+
+backCard=new Image();
+//backCard.src="image/back1.gif";
+backCard.src="image/back01.png";
+ctx.drawImage(backCard, this.x,this.y, this.width, this.height);
+
+}
+
+ 
+//construction-for cards
+function Cards(x, y, width, height,img, info,bomb){
+	this.x=x;
+	this.y=y;
+	this.width=width;
+	this.height=height;
+	this.img=img;
+	this.bomb=bomb;
+	this.info=info;
+	this.draw = draw_back; 
+}
+
+//make matrix for cards, set up cards objects
+function make_matrix(){
+	var pic;
+	var cardX=firstX;
+	var cardY=firstY;
+	
+	for(var i=0;i<pictures.length;i++){
+		pic = new Image();
+		pic.src=pictures[i];
+		bomb=0;
+		if(i==6){var bomb=1;}
+		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic,i,bomb);
+		matrix.push(card);
+
+		cardX = cardX + cardWidth + margin;
+		if(i%5==4){
+			cardX=firstX;
+			cardY=cardY + cardHeight + margin;
+			}
+			
+		card.draw();
+		}
+	
+	}
+function shuffle() 
+{ 
+var i; 
+var j; 
+var temp_info; 
+var temp_img; 
+var temp_bomb;
+var matrix_length = matrix.length; 
+var k; 
+for (k = 0; k < 3 * matrix_length; k++) 
+{ 
+i = Math.floor(Math.random() * matrix_length); 
+j = Math.floor(Math.random() * matrix_length); 
+temp_info = matrix[i].info; 
+temp_img = matrix[i].img; 
+temp_bomb= matrix[i].bomb;
+matrix[i].info = matrix[j].info; 
+matrix[i].img = matrix[j].img; 
+matrix[i].bomb = matrix[j].bomb;
+matrix[j].info = temp_info; 
+matrix[j].img = temp_img; 
+matrix[j].bomb = temp_bomb; 
+} 
+} 
+//click card method triggled by mouse event
+function clickCard(ev) 
+{ 
+
+var mx; 
+var my; 
+
+var i; 
+
+if (ev.layerX || ev.layerX == 0) { // Firefox 
+mx = ev.layerX; 
+my = ev.layerY; 
+} else if (ev.offsetX || ev.offsetX == 0) { // Opera 
+mx = ev.offsetX; 
+my = ev.offsetY; 
+} 
+
+for (i = 0; i < matrix.length; i++) 
+{ 
+	card = matrix[i]; 
+		//find which card the player click
+		if (mx > card.x && mx < (card.x + card.width) && my > card.y && my < (card.y + card.height)) 
+		{ 
+			ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
+				break;
+		}
+} 
+
+
+if (i < matrix.length) 
+{ //the card is bomb
+	if (card.bomb==1) 
+	{ isPassed=false;
+	drawOver(isPassed);
+	} 
+} 
+} 
+
+//onload function
+function drawMap(){
+	canvas = document.getElementById("myCav");
+	ctx = canvas.getContext("2d");
+	
+	
+	render();
+	
+	//click listenner
+	setTimeout(function() {
+	canvas.addEventListener('click', clickCard, false);	},3500);
+
+	make_matrix();
+	shuffle();
+	
+	setTimeout(function() {
+		for (i = 0; i < matrix.length; i++){
+			ctx.drawImage(matrix[i].img, matrix[i].x, matrix[i].y, matrix[i].width, matrix[i].height);
+			}
+         
+    }, 1500);
+	setTimeout(function() {
+		for (i = 0; i < matrix.length; i++){
+			matrix[i].draw();
+			}
+         
+    }, 3500);
+	var now = Date.now();
+	var delta = now - then;
+
+	update(delta / 1000);		
+	then = now;
+		//requestAnimationFrame(drawMap);	
+}
+//timer
+function update(){
+	setTimeout(function() {
+		
+			setInterval(function(){
+				second++;
+				if(second==60){
+				minuts++;
+				second=0;
+				}
+			ctx.clearRect(190,30,120,30);
+				ctx.fillText("Time:"+minuts+":"+second,200, 30);
+				
+			},1000)
+         
+    }, 3500);
+	}
+
+// Cross-browser support for requestAnimationFrame
+//var w = window;
+//requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+// Let's play this game!
+var then = Date.now();
+
+//main();
+function render(){
+	//background image;
+    backgroundImage=new Image();
+	backgroundImage.src="image/background0.png";
+	ctx.drawImage(backgroundImage, 0, 0);
+	//game name
+	ctx.font = "20px Comic Sans MS";
+	ctx.fillStyle = "blue";
+	ctx.textAlign = "center";
+	ctx.textBaseline = "top";
+	ctx.fillText("Level 1/10", canvas.width/2, 0);
+	ctx.textAlign = "left";
+	ctx.fillText("Score:"+score, 0, 30);
+	ctx.textAlign = "left";
+	ctx.fillText("Time:"+minuts+":"+second,200, 30);
+	
+	//pause button
+	 pauseButton=new Image();
+	pauseButton.src="image/pauseButton.gif";
+	ctx.drawImage(pauseButton, 50, 420);
+	//stop button
+	 stopButton=new Image();
+	stopButton.src="image/stopButton.gif";
+	ctx.drawImage(stopButton, 170, 420);
+	}
+function drawOver(isPassed) {
+if(!isPassed){
+window.location.href="gameOver.html?scores="+score;}
+//var tipsText = isPassed ? 'GAME PASS!' : 'GAME OVER!';
+//ctx.fillStyle = Color.mask;
+//ctx.fillRect(0, 0, canvas.width, canvas.height);
+//ctx.fillStyle = Color.btnBg;
+//ctx.fillRect(canvas.width/2-Config.btnWidth/2, //canvas.height/2-Config.btnHeight/2, Config.btnWidth, Config.btnHeight);
+
+//ctx.font = '20px Arial';
+//ctx.textAlign = 'center';
+//ctx.textBaseline = 'middle';
+//ctx.fillStyle = Color.btnFont;
+//ctx.fillText('play again', canvas.width/2, canvas.height/2+20);
+//ctx.fillText('play again', canvas.width/2, canvas.height/2+Config.btnHeight/2-20);
+//ctx.fillStyle = Color.overFont;
+//ctx.fillStyle = "white";
+//ctx.textBaseline = "top";
+//ctx.fillText(tipsText, canvas.width/2, canvas.height/2);
+//ctx.fillText(tipsText, canvas.width/2, canvas.height/2-Config.btnHeight);
+}
+
+</script>
+</head>
+
+<body onload="drawMap()">
+
+<canvas id="myCav" width="320" height="480"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<div id="images">
+
+<img src="image/back01.png" width="50" height="50" id="bomb" style="left:100px;top:100px;">
+<img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
+<img src="image/pauseButton.gif" width="25" height="30" id="backgroundImage" style="left:100px;top:100px;"><!---->
+<img src="image/stopButton.gif" width="25" height="30" id="backgroundImage" style="left:100px;top:100px;">
+</div>
+
+</body>
+
+</html>
