@@ -18,7 +18,7 @@ var matrix = [];
 //var firstX = 20; 
 //var firstY = 100; 
 var firstX = 25;
-var firstY = 80; 
+var firstY = 73; 
 var margin = 4; 
 var cardWidth = 50; 
 var cardHeight = 50;
@@ -252,13 +252,13 @@ function render(){
 	//score and timer line background shadow
 	backgroundScoreTime=new Image();
 	backgroundScoreTime.src="image/gameScoreTime.png";
-	ctx.drawImage(backgroundScoreTime, 0, 25);
+	ctx.drawImage(backgroundScoreTime, 0, 0);
 	
 	//game background shadow
 	backgroundShadow=new Image();
 	backgroundShadow.src="image/gameBackground.png";
 
-	ctx.drawImage(backgroundShadow, 0, 60);
+	ctx.drawImage(backgroundShadow, 0, 55);
 	
 	//game title
 	ctx.font = "18px Comic Sans MS";
@@ -331,7 +331,7 @@ Your browser does not support the canvas element.
 <img src="image/stopButton.png" width="25" height="30" id="backgroundImage" style="left:100px;top:100px;">
 </div>
 
-<div class="timer">Timer: <span id="timer">0:0</span></div>
+<div class="timer">Time: <span id="timer">0:0</span></div>
 <div class="score">Scores: <span id="score">0</span></div>
 
 <div id="gameOver">

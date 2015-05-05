@@ -12,7 +12,7 @@ background: transparent;
 	}
 .timer {
 		position: absolute;
-		top: 25px;
+		top: 30px;
 		left: 210px;
 		color: blue;
 		font-family: Comic Sans MS, sans-serif;
@@ -20,7 +20,7 @@ background: transparent;
 			}
 .score {
 		position: absolute;
-		top: 25px;
+		top: 30px;
 		left: 30px;
 		color: blue;
 		font-family: Comic Sans MS, sans-serif;
