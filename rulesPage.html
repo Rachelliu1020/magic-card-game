@@ -33,11 +33,14 @@ function drawPage(){
 	ctx.drawImage(backgroundImage, 0, 0);
 
 	//rules
-	rules=new Image();
 	maxWidth=300;
 	lineHeight=30;
-	rules.src="image/rules.png";
+	
+	rules=new Image();
+	rules.src="image/rulesBackground.png";
 	ctx.drawImage(rules, 0, 20);
+	
+	
 	ctx.font="25px Comic Sans MS";
     ctx.fillStyle = "#01294d";
 	ctx.textAlign = "center";
@@ -95,7 +98,7 @@ Your browser does not support the canvas element.
 </canvas>
 <div id="images">
 
-<img src="image/rules.png" width="30" height="30">
+<img src="image/rulesBackground.png" width="30" height="30">
 
 <img src="image/startButton.png" width="30" height="30">
 <img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
