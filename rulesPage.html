@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Cards/rules</title>
 <link rel="stylesheet" href="game.css">
 <script>
 var ctx; 
 var canvas; 
+var buttonAudio;
+var startButton;
+
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {         
 var words = text.split(" ");         
 var line = "";
@@ -31,22 +35,16 @@ function drawPage(){
     backgroundImage=new Image();
 	backgroundImage.src="image/background0.png";
 	ctx.drawImage(backgroundImage, 0, 0);
-
+checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	//rules
-	maxWidth=300;
-	lineHeight=30;
+	
 	
 	rules=new Image();
 	rules.src="image/rulesBackground.png";
 	ctx.drawImage(rules, 0, 20);
 	
 	
-	ctx.font="25px Comic Sans MS";
-    ctx.fillStyle = "#01294d";
-	ctx.textAlign = "center";
-	//ctx.fillText("click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.", canvas.width/2, canvas.height/2);
-	text="click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.";
-	 wrapText(ctx, text, canvas.width/2, 100, maxWidth, lineHeight); 
+	 
 	//start button
 	buttonX=60;
 	buttonY=400;
@@ -54,18 +52,36 @@ function drawPage(){
 	buttonHeight=52;
 	startButton=new Image();
 	startButton.src="image/startButton.png";
-	ctx.drawImage(startButton, buttonX, buttonY);
 	
-	//button listener
+	//button audio 
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
+	buttonAudio.loop = false;
+	buttonAudio.volume = .55;
+	buttonAudio.load();
+
+	
+}
+function checkReadyState() {
+	if ( buttonAudio.readyState == 4 && backgroundImage.complete&&startButton.complete) {
+		checkAudioImage=clearInterval(checkAudioImage);
+		document.getElementById('loading').style.display = "none";
+		
+		ctx.drawImage(startButton, buttonX, buttonY);
+		
+	//draw rules words
+	maxWidth=300;
+	lineHeight=30;
+	ctx.font="25px Comic Sans MS";
+    ctx.fillStyle = "#01294d";
+	ctx.textAlign = "center";
+	//ctx.fillText("click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.", canvas.width/2, canvas.height/2);
+	text="click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.";
+	 wrapText(ctx, text, canvas.width/2, 100, maxWidth, lineHeight);
+
+		//button listener
 	canvas.addEventListener('click', clickButton, false);
-	
-	/*card = new Image();
-	card.src="magic_card2.gif";
-	bomb = new Image();
-	bomb.src="bomb.gif";
-	
-	ctx.drawImage(card, 5, 50);*/
-	
+
+	}
 }
 function clickButton(ev){
 var mx; 
@@ -82,7 +98,9 @@ my = ev.offsetY;
 } 
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
-	window.location.href="game.html";
+	buttonAudio.play();
+	setTimeout(function(){window.location.href="game.html";},500);
+	
 	}
 
 }
@@ -96,13 +114,14 @@ if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (button
 style="border:1px solid #c3c3c3;">
 Your browser does not support the canvas element.
 </canvas>
+
 <div id="images">
-
 <img src="image/rulesBackground.png" width="30" height="30">
-
 <img src="image/startButton.png" width="30" height="30">
 <img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
 </div>
+
+<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
 </body>
 
 </html>

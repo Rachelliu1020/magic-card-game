@@ -1,3 +1,8 @@
+@font-face {
+    font-family:'Comic Sans MS';
+    src:url(ComicSansMS.ttf);
+}
+@media only all and (min-width:320px){
 canvas{
 width:320px;
 height:480px;	
@@ -5,36 +10,50 @@ margin:auto;
 position: absolute;
 top: 0px;
 left: 0px;
+right:0px;
+margin:auto;
 background: transparent;
+
 }
 #images{
-	display:none;
-	}
+display:none;
+}
+
 .timer {
-		position: absolute;
-		top: 30px;
-		left: 210px;
-		color: blue;
-		font-family: Comic Sans MS, sans-serif;
-		cursor: default;
+position: absolute;
+top: 30px;
+left:0; /*210px;*/
+right:0;
+width:110px;
+margin:auto;
+padding-left:210px;
+color: blue;
+font-family: Comic Sans MS, sans-serif;
+cursor: default;
 			}
 .score {
-		position: absolute;
-		top: 30px;
-		left: 30px;
-		color: blue;
-		font-family: Comic Sans MS, sans-serif;
-		cursor: default;
+position: absolute;
+top: 30px;
+left: 0;/*30px*/
+right:0;
+margin:auto;
+width:290px;
+padding-left:30px;
+color: blue;
+font-family: Comic Sans MS, sans-serif;
+cursor: default;
 			}
 #gameOver,#pause,#stop {
-				position: absolute;
-				background-color:rgba(0,0,0,0.6);
-				top: 0px;
-				left: 0px;
-				width:320px;
-				height:480px;
-				display: none;
-			}
+position: absolute;
+background-color:rgba(0,0,0,0.6);
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
 #gameOver p{
 background-color:rgba(255,255,255,0.6);
 margin-top:100px;
@@ -53,12 +72,12 @@ cursor: default;
 font-size:20px;
 }		
 .leftButton {
-			    display:inline-block;
-				margin-left:50px;
-			}
+display:inline-block;
+margin-left:50px;
+}
 .rightButton {
-	display:inline-block;
-	margin-left:20px;
+display:inline-block;
+margin-left:20px;
 }
 #pause p, #stop p{
 background-color:rgba(255,255,255,0.6);
@@ -74,12 +93,20 @@ font-weight:bold;
 font-size: 20px;
 cursor: default;
 }	
-.loading {display:none;
-				position: absolute;
-				top: 100px;
-				left: 210px;
-				color: #FF7F00;
-				font-family: Helvetica, sans-serif;
-				font-size: 30px;
-				cursor: default;
-			}
+#loading {
+position: absolute;
+top: 100px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+color: #01294d;
+/*background-color:white;#FF7F00*/
+text-align:center;
+font-family: Comic Sans MS, sans-serif;
+font-size: 30px;
+cursor: default;
+display:block;
+}
+}

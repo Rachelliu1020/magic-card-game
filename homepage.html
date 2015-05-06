@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Cards/homepage</title>
 <link rel="stylesheet" href="game.css">
 <script>
 var ctx; 
 var canvas; 
-
+var buttonAudio;
+var backgroundImage;
+var pic1;
+var pic2;
+var pic3;
+var pic4;
+//play button 
+var buttonX=60;
+var buttonY=370;
+var buttonWidth=192;
+var buttonHeight=52;
 function drawPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
@@ -18,43 +29,48 @@ function drawPage(){
 	//game name
 	gameName=new Image();
 	gameName.src="image/gameName.png";
-	ctx.drawImage(gameName, 15, 50); 
+	 
 	//magic card pictures
 	pic1=new Image();
 	pic1.src="image/homepage_icon105.png";
-	ctx.drawImage(pic1, 60, 140);
-	
+
 	pic2=new Image();
 	pic2.src="image/homepage_icon118.png";
-	ctx.drawImage(pic2, 160, 140);
+	
 	
 	pic3=new Image();
 	pic3.src="image/homepage_iconbomb1.png";
-	ctx.drawImage(pic3, 60, 240);
-	
+
 	pic4=new Image();
 	pic4.src="image/homepage_icon124.png";
-	ctx.drawImage(pic4, 160, 240);
 	
-	//start button
-	buttonX=60;
-	buttonY=370;
-	buttonWidth=192;
-	buttonHeight=52;
+	
+	//play button
 	playButton=new Image();
 	playButton.src="image/playButton.png";
-	ctx.drawImage(playButton, buttonX, buttonY);
 	
-	//button listener
+	//button audio 
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
+	buttonAudio.loop = false;
+	buttonAudio.volume = .55;
+	buttonAudio.load();
+	checkAudioImage = setInterval(function(){checkReadyState();},1000);
+	
+}
+function checkReadyState() {
+	if ( buttonAudio.readyState == 4 && backgroundImage.complete&&pic1.complete&&pic2.complete&&pic3.complete&&pic4.complete) {
+		checkAudioImage=clearInterval(checkAudioImage);
+		document.getElementById('loading').style.display = "none";
+		ctx.drawImage(gameName, 15, 50);
+		ctx.drawImage(pic1, 60, 140);
+		ctx.drawImage(pic2, 160, 140);
+		ctx.drawImage(pic3, 60, 240);
+		ctx.drawImage(pic4, 160, 240);
+		ctx.drawImage(playButton, buttonX, buttonY);
+		//button listener
 	canvas.addEventListener('click', clickButton, false);
-	
-	/*card = new Image();
-	card.src="magic_card2.gif";
-	bomb = new Image();
-	bomb.src="bomb.gif";
-	
-	ctx.drawImage(card, 5, 50);*/
-	
+
+	}
 }
 function clickButton(ev){
 var mx; 
@@ -71,7 +87,8 @@ my = ev.offsetY;
 } 
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
-	window.location.href="rulesPage.html";
+	buttonAudio.play();
+	setTimeout(function(){window.location.href="rulesPage.html";},500);
 	}
 
 }
@@ -85,6 +102,7 @@ if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (button
 style="border:1px solid #c3c3c3;">
 Your browser does not support the canvas element.
 </canvas>
+
 <div id="images">
 <img src="image/gameName.png" width="30" height="30">
 <img src="image/homepage_icon105.png" width="30" height="30">
@@ -94,6 +112,8 @@ Your browser does not support the canvas element.
 <img src="image/playButton.png" width="30" height="30">
 <img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
 </div>
+
+<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
 </body>
 
 </html>
