@@ -9,11 +9,13 @@
 var ctx; 
 var canvas; 
 var buttonAudio;
+var backgroundAudio;
 var backgroundImage;
 var pic1;
 var pic2;
 var pic3;
 var pic4;
+var playClicked;
 //play button 
 var buttonX=60;
 var buttonY=370;
@@ -48,9 +50,17 @@ function drawPage(){
 	//play button
 	playButton=new Image();
 	playButton.src="image/playButton.png";
+	playClicked=new Image();
+	playClicked.src="image/playClicked.png";
 	
+	//background audio
+	backgroundAudio = new Audio("sounds/homeBg.wav");
+	backgroundAudio.loop = true;
+	backgroundAudio.volume = .25;
+	backgroundAudio.load();
+	backgroundAudio.play();
 	//button audio 
-	buttonAudio = new Audio("sounds/buttonClick.mp3");
+	buttonAudio = new Audio("sounds/buttonClick.wav");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
@@ -58,7 +68,7 @@ function drawPage(){
 	
 }
 function checkReadyState() {
-	if ( buttonAudio.readyState == 4 && backgroundImage.complete&&pic1.complete&&pic2.complete&&pic3.complete&&pic4.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete&&pic1.complete&&pic2.complete&&pic3.complete&&pic4.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		ctx.drawImage(gameName, 15, 50);
@@ -88,6 +98,7 @@ my = ev.offsetY;
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
 	buttonAudio.play();
+	ctx.drawImage(playClicked, buttonX, buttonY);
 	setTimeout(function(){window.location.href="rulesPage.html";},500);
 	}
 

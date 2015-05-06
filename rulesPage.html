@@ -9,8 +9,9 @@
 var ctx; 
 var canvas; 
 var buttonAudio;
+var backgroundAudio;
 var startButton;
-
+var startClicked;
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {         
 var words = text.split(" ");         
 var line = "";
@@ -36,9 +37,8 @@ function drawPage(){
 	backgroundImage.src="image/background0.png";
 	ctx.drawImage(backgroundImage, 0, 0);
 checkAudioImage = setInterval(function(){checkReadyState();},1000);
+
 	//rules
-	
-	
 	rules=new Image();
 	rules.src="image/rulesBackground.png";
 	ctx.drawImage(rules, 0, 20);
@@ -52,6 +52,15 @@ checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	buttonHeight=52;
 	startButton=new Image();
 	startButton.src="image/startButton.png";
+	startClicked=new Image();
+	startClicked.src="image/startClicked.png";
+	
+	//background audio
+	backgroundAudio = new Audio("sounds/homeBg.wav");
+	backgroundAudio.loop = true;
+	backgroundAudio.volume = .25;
+	backgroundAudio.load();
+	backgroundAudio.play();
 	
 	//button audio 
 	buttonAudio = new Audio("sounds/buttonClick.mp3");
@@ -62,7 +71,7 @@ checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	
 }
 function checkReadyState() {
-	if ( buttonAudio.readyState == 4 && backgroundImage.complete&&startButton.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete&&startButton.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		
@@ -99,6 +108,7 @@ my = ev.offsetY;
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
 	buttonAudio.play();
+	ctx.drawImage(startClicked, buttonX, buttonY);
 	setTimeout(function(){window.location.href="game.html";},500);
 	
 	}
