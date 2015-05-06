@@ -1,5 +1,4 @@
 # magic-card-game
-project group 6
-read me laura
-Tracy
-Lydia
+We are the most efficient team that can make a perfect game.
+Come on, group 6.
+Let's do it!!!
