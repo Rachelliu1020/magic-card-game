@@ -21,6 +21,13 @@ var buttonX=60;
 var buttonY=370;
 var buttonWidth=192;
 var buttonHeight=52;
+var soundButtonX=230;
+var soundButtonY=120;
+var soundButtonWidth=45;
+var soundButtonHeight=47;
+var soundAble=true;
+var numClickSound=0;
+
 function drawPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
@@ -52,7 +59,11 @@ function drawPage(){
 	playButton.src="image/playButton.png";
 	playClicked=new Image();
 	playClicked.src="image/playClicked.png";
-	
+	//sound button 
+	soundButton=new Image();
+	soundButton.src="image/sound.png";
+	nosoundButton=new Image();
+	nosoundButton.src="image/nosound.png";
 	//background audio
 	backgroundAudio = new Audio("sounds/homeBg.wav");
 	backgroundAudio.loop = true;
@@ -68,15 +79,16 @@ function drawPage(){
 	
 }
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete&&pic1.complete&&pic2.complete&&pic3.complete&&pic4.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && pic4.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
-		ctx.drawImage(gameName, 15, 50);
+		ctx.drawImage(gameName, 15, 40);
 		ctx.drawImage(pic1, 60, 140);
 		ctx.drawImage(pic2, 160, 140);
 		ctx.drawImage(pic3, 60, 240);
 		ctx.drawImage(pic4, 160, 240);
 		ctx.drawImage(playButton, buttonX, buttonY);
+		ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 		//button listener
 	canvas.addEventListener('click', clickButton, false);
 
@@ -97,10 +109,24 @@ my = ev.offsetY;
 } 
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
-	buttonAudio.play();
+	if(soundAble) buttonAudio.play();
 	ctx.drawImage(playClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="rulesPage.html";},500);
+	setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
 	}
+if(mx > soundButtonX && mx < (soundButtonX + soundButtonWidth) && my > soundButtonY && my < (soundButtonY + soundButtonHeight)){
+numClickSound++;
+if(numClickSound%2==1){
+backgroundAudio.pause();
+
+soundAble=false;
+ctx.drawImage(nosoundButton, soundButtonX, soundButtonY);
+}else{
+soundAble=true;
+backgroundAudio.play();
+ctx.drawImage(soundButton, soundButtonX, soundButtonY);
+}
+
+}
 
 }
 
@@ -115,13 +141,13 @@ Your browser does not support the canvas element.
 </canvas>
 
 <div id="images">
-<img src="image/gameName.png" width="30" height="30">
-<img src="image/homepage_icon105.png" width="30" height="30">
-<img src="image/homepage_icon118.png" width="30" height="30">
-<img src="image/homepage_iconbomb1.png" width="30" height="30">
-<img src="image/homepage_icon124.png" width="30" height="30">
-<img src="image/playButton.png" width="30" height="30">
-<img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
+<img src="image/gameName.png" alt="game name" width="30" height="30">
+<img src="image/homepage_icon105.png" alt="card example" width="30" height="30">
+<img src="image/homepage_icon118.png" alt="card example" width="30" height="30">
+<img src="image/homepage_iconbomb1.png" alt="card example" width="30" height="30">
+<img src="image/homepage_icon124.png" alt="card example" width="30" height="30">
+<img src="image/playButton.png" alt="play button" width="30" height="30">
+<img src="image/background0.png" alt="background image" width="320" height="480" >
 </div>
 
 <div class="loading" id="loading">LOADING...<p>Please wait</p></div>

@@ -12,6 +12,8 @@ var buttonAudio;
 var backgroundAudio;
 var startButton;
 var startClicked;
+var soundAble=true;
+/*
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {         
 var words = text.split(" ");         
 var line = "";
@@ -29,6 +31,7 @@ var line = "";
         }
         ctx.fillText(line, x, y);       
 }
+*/
 function drawPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
@@ -39,9 +42,9 @@ function drawPage(){
 checkAudioImage = setInterval(function(){checkReadyState();},1000);
 
 	//rules
-	rules=new Image();
-	rules.src="image/rulesBackground.png";
-	ctx.drawImage(rules, 0, 20);
+	//rules=new Image();
+	//rules.src="image/rulesBackground.png";
+	//ctx.drawImage(rules, 0, 20);
 	
 	
 	 
@@ -55,15 +58,22 @@ checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	startClicked=new Image();
 	startClicked.src="image/startClicked.png";
 	
+	//pause soundAble in URL
+	soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
+	soundAble=((soundAble=="true"||soundAble=="")? true :false);
 	//background audio
 	backgroundAudio = new Audio("sounds/homeBg.wav");
 	backgroundAudio.loop = true;
 	backgroundAudio.volume = .25;
 	backgroundAudio.load();
-	backgroundAudio.play();
+	if(soundAble){
+	
+	backgroundAudio.play();}else{backgroundAudio.pause();}
+	
+	
 	
 	//button audio 
-	buttonAudio = new Audio("sounds/buttonClick.mp3");
+	buttonAudio = new Audio("sounds/buttonClick.wav");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
@@ -71,21 +81,21 @@ checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	
 }
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete&&startButton.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && startButton.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
-		
+		document.getElementById('rules').style.display = "block";
 		ctx.drawImage(startButton, buttonX, buttonY);
 		
 	//draw rules words
-	maxWidth=300;
-	lineHeight=30;
-	ctx.font="25px Comic Sans MS";
-    ctx.fillStyle = "#01294d";
-	ctx.textAlign = "center";
+	//maxWidth=300;
+	//lineHeight=30;
+	//ctx.font="25px Comic Sans MS";
+    //ctx.fillStyle = "#01294d";
+	//ctx.textAlign = "center";
 	//ctx.fillText("click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.", canvas.width/2, canvas.height/2);
-	text="click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.";
-	 wrapText(ctx, text, canvas.width/2, 100, maxWidth, lineHeight);
+	//text="click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.";
+	 //wrapText(ctx, text, canvas.width/2, 100, maxWidth, lineHeight);
 
 		//button listener
 	canvas.addEventListener('click', clickButton, false);
@@ -107,9 +117,9 @@ my = ev.offsetY;
 } 
 if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
 		{ 
-	buttonAudio.play();
+	if(soundAble)buttonAudio.play();
 	ctx.drawImage(startClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="game.html";},500);
+	setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
 	
 	}
 
@@ -124,13 +134,17 @@ if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (button
 style="border:1px solid #c3c3c3;">
 Your browser does not support the canvas element.
 </canvas>
-
+<!--no display image-->
 <div id="images">
-<img src="image/rulesBackground.png" width="30" height="30">
-<img src="image/startButton.png" width="30" height="30">
-<img src="image/background0.png" width="320" height="480" id="backgroundImage" style="left:100px;top:100px;">
+<img src="image/rulesBackground.png" alt="rule background shadow" width="30" height="30">
+<img src="image/startButton.png" alt="start button" width="30" height="30">
+<img src="image/background0.png" alt="background image" width="320" height="480">
 </div>
-
+<!--rules sentences-->
+<div id="rules">
+<p>click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.</p>
+</div>
+<!--loading page-->
 <div class="loading" id="loading">LOADING...<p>Please wait</p></div>
 </body>
 
