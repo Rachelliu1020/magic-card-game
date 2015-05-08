@@ -33,7 +33,7 @@ var timer;
 var matrix = [];  
 //var firstX = 20; 
 //var firstY = 100; 
-var firstX = 25;
+var firstX = 28;
 var firstY = 73; 
 var margin = 4; 
 var cardWidth = 50; 
@@ -432,7 +432,7 @@ Your browser does not support the canvas element.
 <div class="score">Scores: <span id="score">0</span></div>
 <!--game over page-->
 <div id="gameOver">
-<p>GAME OVER<br> <span >Your Scores: <span id="scoreGameOver"></span></span></p>
+<p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span></span></p>
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
@@ -443,7 +443,7 @@ setTimeout(function(){window.location.href='homepage.html';},500);
 
 <!--all cleared page-->
 <div id="allCleared">
-<p>ALL CLEARED!!!<br> <span>Your Scores: <span id="scoreAllCleared"></span></span></p>
+<p>ALL CLEARED!!!<br> <span>Your Score: <span id="scoreAllCleared"></span></span></p>
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
@@ -452,7 +452,7 @@ setTimeout(function(){window.location.href='homepage.html';},500);
 </div>
 <!--pause page-->
 <div id="pause">
-<img id="sound" src="image/sound.png" alt="sound button" width="47" height="47" onclick="
+<img id="sound" src="image/sound.png" alt="sound button" width="45" height="47" onclick="
 numClickSound++;
 if(numClickSound%2==1){
 backgroundAudio.pause();
