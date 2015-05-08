@@ -160,12 +160,15 @@ function clickCard(ev){
 		//find which card the player click
 		if (myX > card.x && myX < (card.x + card.width) && myY > card.y && myY < (card.y + card.height)) 
 		{ 
-			ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
+			//bomb: 1
 			if (card.bomb==1){
-			if(soundAble) bombAudio.play();
-			
-			}else{
-			if(soundAble) clickCardAudio.play();
+				if(soundAble) bombAudio.play();
+				ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
+
+			//not bomb and first click: 0
+			}else if(card.bomb==0 && isPassed){
+				if(soundAble) clickCardAudio.play();
+				ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
 			}
 			break;
 		}
@@ -179,6 +182,8 @@ function clickCard(ev){
 		//all clicked card are not bomb
 		}else if (card.bomb==0){
 		numMCard--;
+		//not bomb and have clicked: 2
+		card.bomb=2;
 		if(numMCard==0){score+=500; allCleared(isPassed);}
 		
 		}
