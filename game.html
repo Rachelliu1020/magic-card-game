@@ -303,12 +303,6 @@ function checkReadyState() {
 
 }
 
-/*function main(){
-	update();
-	//render();	
-	requestAnimationFrame(main);
-}*/
-
 //timer
 function update(){
 	setTimeout(function() {
@@ -324,14 +318,6 @@ function update(){
 			},1000);
     }, 3500);
 }
-
-// Cross-browser support for requestAnimationFrame
-
-//requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
-
-//automatically update the score and timer
-//requestAnimationFrame(main);
-
 
 function render(){
 	//background image;
@@ -376,10 +362,7 @@ function render(){
 
 function gameOver(isPassed) {
 	if(!isPassed){
-		//window.location.href="gameOver.html?scores="+score;
-		//backgroundAudio.pause();
-		//gameOverAudio.currentTime = 0;
-		//gameOverAudio.play();
+		
 		setTimeout(function() {
 			backgroundAudio.pause();
 			gameOverAudio.currentTime = 0;
@@ -407,14 +390,14 @@ function allCleared(isPassed) {
 function getCookie(cookieName){
 	if (document.cookie.length>0)
 	{
-	cookieStart=document.cookie.indexOf(cookieName + "=");
-	if (cookieStart!=-1)
-	{
-	cookieStart=cookieStart + cookieName.length+1;
-	cookieEnd=document.cookie.indexOf(";",cookieStart);
-	if (cookieEnd==-1) cookieEnd=document.cookie.length;
-	return unescape(document.cookie.substring(cookieStart,cookieEnd));
-	}
+		cookieStart=document.cookie.indexOf(cookieName + "=");
+		if (cookieStart!=-1)
+		{
+			cookieStart=cookieStart + cookieName.length+1;
+			cookieEnd=document.cookie.indexOf(";",cookieStart);
+			if (cookieEnd==-1) cookieEnd=document.cookie.length;
+			return unescape(document.cookie.substring(cookieStart,cookieEnd));
+		}
 	}
 	return "";
 }
@@ -513,7 +496,7 @@ timer=setInterval(function(){
 </div>
 
 <!--loading page-->
-<div id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<br><br>Please wait</div>
 
 </body>
 
