@@ -10,11 +10,13 @@
 
 var ctx; 
 var canvas;
+//set the number of bomb and magic cards
 var numBomb=1;
 var numMCard=29;
+
 var backCard; 
 var card; 
-var isPassed = true; //not click  
+var isPassed = true;   
 //sounds
 var backgroundAudio;
 var gameOverAudio;
@@ -29,7 +31,6 @@ var soundAble=true;
 var numClickSound=0;
 
 var backgroundImage;
-var timer;
 var matrix = [];  
 //var firstX = 20; 
 //var firstY = 100; 
@@ -40,6 +41,8 @@ var cardWidth = 50;
 var cardHeight = 50;
 //score
 var score=0;
+//timer
+var timer;
 var minuts=0; 
 var second=0;
 //pause button
@@ -55,6 +58,7 @@ var stopButtonWidth=100;
 //level
 var level=1;
 var status=0;
+var pic=new Array();
 var pictures = [ 
 "image/icon024.png","image/icon023.png",
 "image/icon022.png","image/icon021.png",
@@ -73,35 +77,35 @@ var pictures = [
 "image/icon013.png","image/icon06.png",
 ]; 
 
-//draw cards' back sides
+//draw backSide of card
 function backsideCard(){ 
 	ctx.drawImage(backCard, this.x,this.y, this.width, this.height);
 }
 
 //construction-for cards
-function Cards(x, y, width, height,img, info,bomb){
+function Cards(x, y, width, height,img, num,bomb){
 	this.x=x;
 	this.y=y;
 	this.width=width;
 	this.height=height;
 	this.img=img;
 	this.bomb=bomb;
-	this.info=info;
+	this.num=num;
 	this.draw = backsideCard; 
 }
 
 //make matrix for cards, set up cards objects
-function make_matrix(){
-	var pic;
+function createMatrix(){
+	//var pic;
 	var cardX=firstX;
 	var cardY=firstY;
 	
 	for(var i=0;i<pictures.length;i++){
-		pic = new Image();
-		pic.src=pictures[i];
+		//pic = new Image();
+		//pic.src=pictures[i];
 		bomb=0;
 		if(i==6){var bomb=1;}
-		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic,i,bomb);
+		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
 		matrix.push(card);
 
 		cardX = cardX + cardWidth + margin;
@@ -113,91 +117,89 @@ function make_matrix(){
 		}
 	
 	}
-function shuffle() 
-{ 
-var i; 
-var j; 
-var temp_info; 
-var temp_img; 
-var temp_bomb;
-var matrix_length = matrix.length; 
-var k; 
-for (k = 0; k < 3 * matrix_length; k++){  
-	i = Math.floor(Math.random() * matrix_length); 
-	j = Math.floor(Math.random() * matrix_length); 
-	temp_info = matrix[i].info; 
-	temp_img = matrix[i].img; 
-	temp_bomb= matrix[i].bomb;
-	matrix[i].info = matrix[j].info; 
-	matrix[i].img = matrix[j].img; 
-	matrix[i].bomb = matrix[j].bomb;
-	matrix[j].info = temp_info; 
-	matrix[j].img = temp_img; 
-	matrix[j].bomb = temp_bomb; 
-} 
+function randomCards() { 
+	var i; 
+	var j; 
+	var tempNum; 
+	var tempImg; 
+	var tempBomb;
+	var matrixLength = matrix.length; 
+
+	for (var k = 0; k < 3 * matrixLength; k++){  
+		i = Math.floor(Math.random() * matrixLength); 
+		j = Math.floor(Math.random() * matrixLength); 
+		tempNum = matrix[i].num; 
+		tempImg = matrix[i].img; 
+		tempBomb= matrix[i].bomb;
+		matrix[i].num = matrix[j].num; 
+		matrix[i].img = matrix[j].img; 
+		matrix[i].bomb = matrix[j].bomb;
+		matrix[j].num = tempNum; 
+		matrix[j].img = tempImg; 
+		matrix[j].bomb = tempBomb; 
+	} 
 } 
 //click card method triggered by mouse event
 function clickCard(ev){ 
 
-var mx; 
-var my; 
-var i; 
+	var myX; 
+	var myY; 
+	var i; 
+	// Firefox
+	if (ev.layerX || ev.layerX == 0) {  
+		myX = ev.layerX; 
+		myY = ev.layerY; 
+	// Opera
+	} else if (ev.offsetX || ev.offsetX == 0) {  
+		myX = ev.offsetX; 
+		myY = ev.offsetY; 
+	} 
 
-if (ev.layerX || ev.layerX == 0) { // Firefox 
-	mx = ev.layerX; 
-	my = ev.layerY; 
-} else if (ev.offsetX || ev.offsetX == 0) { // Opera 
-	mx = ev.offsetX; 
-	my = ev.offsetY; 
-} 
-
-for (i = 0; i < matrix.length; i++){  
-	card = matrix[i]; 
-	//find which card the player click
-	if (mx > card.x && mx < (card.x + card.width) && my > card.y && my < (card.y + card.height)) 
-	{ 
-		ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
-		if (card.bomb==1){
-		if(soundAble)
-		bombAudio.play();
-		
-		}else{
-		if(soundAble)
-		clickCardAudio.play();
+	for (i = 0; i < matrix.length; i++){  
+		card = matrix[i]; 
+		//find which card the player click
+		if (myX > card.x && myX < (card.x + card.width) && myY > card.y && myY < (card.y + card.height)) 
+		{ 
+			ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
+			if (card.bomb==1){
+			if(soundAble) bombAudio.play();
+			
+			}else{
+			if(soundAble) clickCardAudio.play();
+			}
+			break;
 		}
-		break;
-	}
-} 
+	} 
 
-if (i < matrix.length){ 
-    //the card is bomb
-	if (card.bomb==1){ 
-	 isPassed=false;
-	gameOver(isPassed);
-	//all clicked card are not bomb
-	}else if (card.bomb==0){
-	numMCard--;
-	if(numMCard==0){score+=500; allCleared(isPassed);}
-	
+	if (i < matrix.length){ 
+		//the card is bomb
+		if (card.bomb==1){ 
+		 isPassed=false;
+		gameOver(isPassed);
+		//all clicked card are not bomb
+		}else if (card.bomb==0){
+		numMCard--;
+		if(numMCard==0){score+=500; allCleared(isPassed);}
+		
+		}
+	} 
+	//find the pause button
+	if (myX > pauseButtonX && myX < (pauseButtonX + pauseButtonWidth) && myY > pauseButtonY && myY < (pauseButtonY + pauseButtonHeight)) 
+	{ 	if (soundAble) buttonAudio.play();
+		//ctx.drawImage(pauseButton, pauseButtonX, pauseButtonY);
+		document.getElementById('pause').style.display = "block";
+		clearInterval(timer);
 	}
-} 
-//find the pause button
-if (mx > pauseButtonX && mx < (pauseButtonX + pauseButtonWidth) && my > pauseButtonY && my < (pauseButtonY + pauseButtonHeight)) 
-{ 	if (soundAble) buttonAudio.play();
-    //ctx.drawImage(pauseButton, pauseButtonX, pauseButtonY);
-	document.getElementById('pause').style.display = "block";
-	clearInterval(timer);
-}
-//find the stop button
-if (mx > stopButtonX && mx < (stopButtonX + stopButtonWidth) && my > stopButtonY && my < (stopButtonY + stopButtonHeight)){ 
-   if (soundAble) buttonAudio.play();
-	document.getElementById('stop').style.display = "block";
-	clearInterval(timer);
-}
+	//find the stop button
+	if (myX > stopButtonX && myX < (stopButtonX + stopButtonWidth) && myY > stopButtonY && myY < (stopButtonY + stopButtonHeight)){ 
+	   if (soundAble) buttonAudio.play();
+		document.getElementById('stop').style.display = "block";
+		clearInterval(timer);
+	}
 } 
 
 //onload function
-function drawMap(){
+function onloadPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
 
@@ -260,15 +262,19 @@ function drawMap(){
 	checkAudio = setInterval(function(){checkReadyState();},1000);
 }
 function checkReadyState() {
-	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backCard.complete) {
+	var frontsideReady=true;
+	for(var i=0; i<pic.length; i++){
+		frontsideReady=frontsideReady && pic[i].complete ;
+	}
+	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backCard.complete&& frontsideReady) {
 		checkAudio=clearInterval(checkAudio);
 		document.getElementById('loading').style.display = "none";
 		//click listener
 		setTimeout(function() {
 		canvas.addEventListener('click', clickCard, false);	},3500);
 		
-		make_matrix();
-		shuffle();
+		createMatrix();
+		randomCards();
 		
 		//automatically show front-side after 1.5 seconds
 		setTimeout(function() {
@@ -338,6 +344,11 @@ function render(){
 	backgroundShadow.src="image/gameBackground.png";
 	ctx.drawImage(backgroundShadow, 0, 55);
 	
+	//frontSide of cards
+	for(var i=0;i<pictures.length;i++){
+		pic[i] = new Image();
+		pic[i].src=pictures[i];
+	}
 	//backSide of cards
 	backCard=new Image();
     backCard.src="image/back01.png";
@@ -388,30 +399,30 @@ function allCleared(isPassed) {
 		clearInterval(timer);
 	}
 }
-function getCookie(c_name){
+function getCookie(cookieName){
 	if (document.cookie.length>0)
 	{
-	c_start=document.cookie.indexOf(c_name + "=");
-	if (c_start!=-1)
+	cookieStart=document.cookie.indexOf(cookieName + "=");
+	if (cookieStart!=-1)
 	{
-	c_start=c_start + c_name.length+1;
-	c_end=document.cookie.indexOf(";",c_start);
-	if (c_end==-1) c_end=document.cookie.length;
-	return unescape(document.cookie.substring(c_start,c_end));
+	cookieStart=cookieStart + cookieName.length+1;
+	cookieEnd=document.cookie.indexOf(";",cookieStart);
+	if (cookieEnd==-1) cookieEnd=document.cookie.length;
+	return unescape(document.cookie.substring(cookieStart,cookieEnd));
 	}
 	}
 	return "";
 }
-function setCookie(c_name,value,expiredays){
+function setCookie(cookieName,cookieValue,expireDays){
 	var exdate=new Date();
-	exdate.setDate(exdate.getDate()+expiredays);
-	document.cookie=c_name+ "=" +escape(value)+
-	((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+	exdate.setDate(exdate.getDate()+expireDays);
+	document.cookie=cookieName+ "=" +escape(cookieValue)+
+	((expireDays==null) ? "" : ";expires="+exdate.toGMTString());
 }
 </script>
 </head>
 
-<body onload="drawMap()">
+<body onload="onloadPage()">
 <!--canvas-->
 <canvas id="myCav" width="320" height="480"
 style="border:1px solid #c3c3c3;">
@@ -497,7 +508,7 @@ timer=setInterval(function(){
 </div>
 
 <!--loading page-->
-<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<p>Please wait</p></div>
 
 </body>
 

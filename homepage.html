@@ -134,11 +134,11 @@ ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 }
 
 }
-function setCookie(c_name,value,expiredays){
+function setCookie(cookieName,cookieValue,expireDays){
 	var exdate=new Date();
-	exdate.setDate(exdate.getDate()+expiredays);
-	document.cookie=c_name+ "=" +escape(value)+
-	((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+	exdate.setDate(exdate.getDate()+expireDays);
+	document.cookie=cookieName+ "=" +escape(cookieValue)+
+	((expireDays==null) ? "" : ";expires="+exdate.toGMTString());
 }
 
 </script>
@@ -161,7 +161,7 @@ Your browser does not support the canvas element.
 <img src="image/background0.png" alt="background image" width="320" height="480" >
 </div>
 
-<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<p>Please wait</p></div>
 </body>
 
 </html>
