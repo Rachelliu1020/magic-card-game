@@ -27,7 +27,7 @@ var soundButtonWidth=45;
 var soundButtonHeight=47;
 var soundAble=true;
 var numClickSound=0;
-
+//onload function
 function drawPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
@@ -77,6 +77,7 @@ function drawPage(){
 	buttonAudio.load();
 	checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	
+	setCookie("soundCookie",soundAble,365);
 }
 function checkReadyState() {
 	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && pic4.complete) {
@@ -111,7 +112,8 @@ if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (button
 		{ 
 	if(soundAble) buttonAudio.play();
 	ctx.drawImage(playClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
+	setTimeout(function(){window.location.href="rulesPage.html"},500);
+	//setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
 	}
 if(mx > soundButtonX && mx < (soundButtonX + soundButtonWidth) && my > soundButtonY && my < (soundButtonY + soundButtonHeight)){
 numClickSound++;
@@ -119,15 +121,24 @@ if(numClickSound%2==1){
 backgroundAudio.pause();
 
 soundAble=false;
+setCookie("soundCookie",soundAble,365);
 ctx.drawImage(nosoundButton, soundButtonX, soundButtonY);
+
 }else{
 soundAble=true;
 backgroundAudio.play();
+setCookie("soundCookie",soundAble,365);
 ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 }
 
 }
 
+}
+function setCookie(c_name,value,expiredays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 }
 
 </script>

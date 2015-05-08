@@ -204,8 +204,9 @@ function drawMap(){
 	render();
 	
 	//sound able: parse from URL
-	soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
-	soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	//soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
+	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	soundAble=((getCookie("soundCookie")=="true")? true :false);
 	if(soundAble){
 		document.getElementById("sound").src="image/sound.png";
 	}else{
@@ -387,6 +388,26 @@ function allCleared(isPassed) {
 		clearInterval(timer);
 	}
 }
+function getCookie(c_name){
+	if (document.cookie.length>0)
+	{
+	c_start=document.cookie.indexOf(c_name + "=");
+	if (c_start!=-1)
+	{
+	c_start=c_start + c_name.length+1;
+	c_end=document.cookie.indexOf(";",c_start);
+	if (c_end==-1) c_end=document.cookie.length;
+	return unescape(document.cookie.substring(c_start,c_end));
+	}
+	}
+	return "";
+}
+function setCookie(c_name,value,expiredays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+
+	((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
 </script>
 </head>
 
@@ -415,19 +436,9 @@ Your browser does not support the canvas element.
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){document.getElementById('gameOver').style.display='none'; document.getElementById('stopNoBack').style.display = 'block';},500);
+setTimeout(function(){window.location.href='homepage.html';},500);
 
 ">
-</div>
-<!--stop page cannot comeback-->
-<div id="stopNoBack">
-<p>Are you sure to quit<br> this game?</p>
-<img class="leftButton" src="image/yesButton.png" alt="yes button" width="100" height="41"  onclick="if (soundAble) buttonAudio.play();timer=clearInterval(timer);setTimeout(function(){window.location.href='homepage.html';},500);">
-<img class="rightButton" src="image/noButton.png" alt="no button" width="100" height="41" onclick="
-	if (soundAble) buttonAudio.play();
-	timer=clearInterval(timer);
-	setTimeout(function(){window.location.href='game.html';},500);
- ">
 </div>
 
 <!--all cleared page-->
@@ -436,7 +447,7 @@ setTimeout(function(){document.getElementById('gameOver').style.display='none'; 
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){document.getElementById('allCleared').style.display='none'; document.getElementById('stopNoBack').style.display = 'block';},500);
+setTimeout(function(){window.location.href='homepage.html';},500);
  ">
 </div>
 <!--pause page-->
@@ -447,9 +458,11 @@ if(numClickSound%2==1){
 backgroundAudio.pause();
 
 soundAble=false;
+setCookie('soundCookie',soundAble,365);
 document.getElementById('sound').src='image/nosound.png';
 }else{
 soundAble=true;
+setCookie('soundCookie',soundAble,365);
 backgroundAudio.play();
 document.getElementById('sound').src='image/sound.png';
 }">
