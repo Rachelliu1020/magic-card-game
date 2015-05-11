@@ -10,11 +10,25 @@
 
 var ctx; 
 var canvas;
+//set the number of bomb and magic cards
 var numBomb=1;
-var numMCard=29;
+var numMCard=3;
+var firstX = 110; 
+var firstY = 150;
+var isPassed = true;
+var matrix = []; 
+var level=1;
+var pic=new Array();
+//score
+var score=0;
+//timer
+var timer;
+var minuts=0; 
+var second=0;
+var clickAble;
 var backCard; 
 var card; 
-var isPassed = true; //not click  
+   
 //sounds
 var backgroundAudio;
 var gameOverAudio;
@@ -29,19 +43,12 @@ var soundAble=true;
 var numClickSound=0;
 
 var backgroundImage;
-var timer;
-var matrix = [];  
-//var firstX = 20; 
-//var firstY = 100; 
-var firstX = 28;
-var firstY = 73; 
+ 
+
 var margin = 4; 
 var cardWidth = 50; 
 var cardHeight = 50;
-//score
-var score=0;
-var minuts=0; 
-var second=0;
+
 //pause button
 var pauseButtonX=50;
 var pauseButtonY=420;
@@ -53,13 +60,14 @@ var stopButtonY=420;
 var stopButtonHeight=41;
 var stopButtonWidth=100;
 //level
-var level=1;
+
 var status=0;
+
 var pictures = [ 
-"image/icon024.png","image/icon023.png",
+"image/iconbomb0.png","image/icon023.png",
 "image/icon022.png","image/icon021.png",
 "image/icon020.png","image/icon019.png",
-"image/iconbomb0.png","image/icon018.png",
+"image/icon024.png","image/icon018.png",
 "image/icon017.png","image/icon016.png",
 "image/icon015.png","image/icon014.png",
 "image/icon013.png","image/icon012.png",
@@ -73,35 +81,267 @@ var pictures = [
 "image/icon013.png","image/icon06.png",
 ]; 
 
-//draw cards' back sides
+//draw backSide of card
 function backsideCard(){ 
 	ctx.drawImage(backCard, this.x,this.y, this.width, this.height);
 }
 
 //construction-for cards
-function Cards(x, y, width, height,img, info,bomb){
+function Cards(x, y, width, height,img, num,bomb){
 	this.x=x;
 	this.y=y;
 	this.width=width;
 	this.height=height;
 	this.img=img;
 	this.bomb=bomb;
-	this.info=info;
+	this.num=num;
 	this.draw = backsideCard; 
 }
 
 //make matrix for cards, set up cards objects
-function make_matrix(){
-	var pic;
-	var cardX=firstX;
-	var cardY=firstY;
+function createMatrix(level){
 	
-	for(var i=0;i<pictures.length;i++){
-		pic = new Image();
-		pic.src=pictures[i];
-		bomb=0;
-		if(i==6){var bomb=1;}
-		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic,i,bomb);
+	var cardMatrix=new Array();
+	matrix=[];
+	var cardX;
+	var cardY;
+	
+	//shuffle cards
+	var p;
+	var q;
+	var temp;
+	for(var i=0;i<3*pictures.length;i++){
+	p = Math.floor(Math.random() * (pictures.length-1)+1);
+	q = Math.floor(Math.random() * (pictures.length-1)+1);
+	temp=pictures[p];
+	pictures[p]=pictures[q];
+	pictures[q]=temp;
+	}
+	
+	
+	switch(level){
+	//Level 1: 2*2 matrix, 1 bomb,3 Magic Cards
+	case 1:
+	
+	    numBomb=1;
+        numMCard=3;
+        firstX = 110; 
+        firstY = 150;
+		cardX=firstX;
+		cardY=firstY;
+		for(var i=0;i<4;i++){
+			cardMatrix[i]=pictures[i];	
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			//pic = new Image();
+			//pic.src=pictures[i];
+			var bomb=0;
+			pic[i].src=cardMatrix[i];	
+			if(i==0){bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%2==1){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}
+		break;
+		
+	//Level 2: 3*3 matrix, 1 bomb,8 Magic Cards
+	case 2: 
+		firstX=80;
+		firstY=130;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=1;
+		numMCard=8; 
+		for(var i=0;i<9;i++){
+			cardMatrix[i]=pictures[i];	
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			var bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i==0){ bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%3==2){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}		
+		break;
+		
+	//Level 3: 4*4 matrix, 2 bomb,14 Magic Cards
+	case 3: 
+		firstX=55;
+		firstY=110;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=2;
+		numMCard=14; 
+		for(var i=0;i<16;i++){
+			cardMatrix[i]=pictures[i];	
+		}
+		for(var j=1; j<numBomb;j++){
+			cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i==0||i==1){var bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%4==3){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}		
+		break;
+		
+	//Level 4: 4*4 matrix, 3 bomb, 13 Magic Cards
+	case 4: 
+		firstX=55;
+		firstY=110;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=3;
+		numMCard=13; 
+		for(var i=0;i<16;i++){
+			cardMatrix[i]=pictures[i];
+		}
+		for(var j=1; j<numBomb;j++){
+			cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			var bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i<numBomb){bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%4==3){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}		
+		break;	
+	//Level 5: 5*5 matrix, 3 bomb, 22 Magic Cards
+	case 5: 
+		firstX=28;
+		firstY=93;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=3;
+		numMCard=22; 
+		for(var i=0;i<25;i++){	
+			cardMatrix[i]=pictures[i];
+		}
+		for(var j=1; j<numBomb;j++){
+			cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			var bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i<numBomb){bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%5==4){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}		
+		break;
+//Level 6: 5*5 matrix, 4 bomb, 21 Magic Cards
+	case 6: 
+		firstX=28;
+		firstY=93;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=4;
+		numMCard=21; 
+		for(var i=0;i<25;i++){	
+			cardMatrix[i]=pictures[i];
+		}
+		for(var j=1; j<numBomb;j++){
+			cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			var bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i<numBomb){bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%5==4){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+		}		
+		break;
+//Level 7: 5*5 matrix, 5 bomb, 20 Magic Cards
+	case 7: 
+		firstX=28;
+		firstY=93;
+		cardX=firstX;
+		cardY=firstY;
+	    numBomb=5;
+		numMCard=20; 
+		for(var i=0;i<25;i++){	
+			cardMatrix[i]=pictures[i];
+		}
+		for(var j=1; j<numBomb;j++){
+				cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+					var bomb=0;
+					pic[i].src=cardMatrix[i];
+					if(i<numBomb){bomb=1;}
+					card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+					matrix.push(card);
+
+					cardX = cardX + cardWidth + margin;
+					if(i%5==4){
+						cardX=firstX;
+						cardY=cardY + cardHeight + margin;
+						}
+					card.draw();
+		}		
+		break;	
+//Level 8: 5*6 matrix, 6 bomb, 24 Magic Cards		
+	case 8:
+	firstX = 28;
+    firstY = 73; 
+	cardX=firstX;
+	cardY=firstY;
+	numBomb=6;
+	numMCard=24;
+	for(var i=0;i<30;i++){	
+			cardMatrix[i]=pictures[i];
+	}
+	for(var j=1; j<numBomb;j++){
+				cardMatrix[j]=cardMatrix[0];
+	}
+	for(var i=0;i<cardMatrix.length;i++){
+		var bomb=0;
+		pic[i].src=cardMatrix[i];
+		if(i<numBomb){bomb=1;}
+		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
 		matrix.push(card);
 
 		cardX = cardX + cardWidth + margin;
@@ -111,101 +351,189 @@ function make_matrix(){
 			}
 		card.draw();
 		}
-	
+	break;
+	//Level 9: 5*6 matrix, 7 bomb, 23 Magic Cards		
+	case 9:
+	firstX = 28;
+    firstY = 73; 
+	cardX=firstX;
+	cardY=firstY;
+	numBomb=7;
+	numMCard=23;
+	for(var i=0;i<30;i++){	
+			cardMatrix[i]=pictures[i];
 	}
-function shuffle() 
-{ 
-var i; 
-var j; 
-var temp_info; 
-var temp_img; 
-var temp_bomb;
-var matrix_length = matrix.length; 
-var k; 
-for (k = 0; k < 3 * matrix_length; k++){  
-	i = Math.floor(Math.random() * matrix_length); 
-	j = Math.floor(Math.random() * matrix_length); 
-	temp_info = matrix[i].info; 
-	temp_img = matrix[i].img; 
-	temp_bomb= matrix[i].bomb;
-	matrix[i].info = matrix[j].info; 
-	matrix[i].img = matrix[j].img; 
-	matrix[i].bomb = matrix[j].bomb;
-	matrix[j].info = temp_info; 
-	matrix[j].img = temp_img; 
-	matrix[j].bomb = temp_bomb; 
-} 
+	for(var j=1; j<numBomb;j++){
+				cardMatrix[j]=cardMatrix[0];
+	}
+	for(var i=0;i<cardMatrix.length;i++){
+		var bomb=0;
+		pic[i].src=cardMatrix[i];
+		if(i<numBomb){bomb=1;}
+		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+		matrix.push(card);
+
+		cardX = cardX + cardWidth + margin;
+		if(i%5==4){
+			cardX=firstX;
+			cardY=cardY + cardHeight + margin;
+			}
+		card.draw();
+		}
+	break;
+	//Level 10: 5*6 matrix, 8 bomb, 22 Magic Cards		
+	case 10:
+		firstX = 28;
+		firstY = 73; 
+		cardX=firstX;
+		cardY=firstY;
+		numBomb=8;
+		numMCard=22;
+		for(var i=0;i<30;i++){	
+			cardMatrix[i]=pictures[i];
+		}
+		for(var j=1; j<numBomb;j++){
+			cardMatrix[j]=cardMatrix[0];
+		}
+		for(var i=0;i<cardMatrix.length;i++){
+			var bomb=0;
+			pic[i].src=cardMatrix[i];
+			if(i<numBomb){bomb=1;}
+			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
+			matrix.push(card);
+
+			cardX = cardX + cardWidth + margin;
+			if(i%5==4){
+				cardX=firstX;
+				cardY=cardY + cardHeight + margin;
+				}
+			card.draw();
+			}
+		break;
+	}
+	}
+function randomCards() { 
+	var i; 
+	var j; 
+	var tempNum; 
+	var tempImg; 
+	var tempBomb;
+	var matrixLength = matrix.length; 
+
+	for (var k = 0; k < 3 * matrixLength; k++){  
+		i = Math.floor(Math.random() * matrixLength); 
+		j = Math.floor(Math.random() * matrixLength); 
+		tempNum = matrix[i].num; 
+		tempImg = matrix[i].img; 
+		tempBomb= matrix[i].bomb;
+		matrix[i].num = matrix[j].num; 
+		matrix[i].img = matrix[j].img; 
+		matrix[i].bomb = matrix[j].bomb;
+		matrix[j].num = tempNum; 
+		matrix[j].img = tempImg; 
+		matrix[j].bomb = tempBomb; 
+	} 
 } 
 //click card method triggered by mouse event
 function clickCard(ev){ 
 
-var mx; 
-var my; 
-var i; 
+	var myX; 
+	var myY; 
+	var i; 
+	// Firefox
+	if (ev.layerX || ev.layerX == 0) {  
+		myX = ev.layerX; 
+		myY = ev.layerY; 
+	// Opera
+	} else if (ev.offsetX || ev.offsetX == 0) {  
+		myX = ev.offsetX; 
+		myY = ev.offsetY; 
+	} 
 
-if (ev.layerX || ev.layerX == 0) { // Firefox 
-	mx = ev.layerX; 
-	my = ev.layerY; 
-} else if (ev.offsetX || ev.offsetX == 0) { // Opera 
-	mx = ev.offsetX; 
-	my = ev.offsetY; 
-} 
+	for (i = 0; i < matrix.length; i++){  
+		card = matrix[i]; 
+		//find which card the player click
+		if (myX > card.x && myX < (card.x + card.width) && myY > card.y && myY < (card.y + card.height)) 
+		{ 
+			//bomb: 1
+			if (card.bomb==1){
+				if(soundAble) bombAudio.play();
+				ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
 
-for (i = 0; i < matrix.length; i++){  
-	card = matrix[i]; 
-	//find which card the player click
-	if (mx > card.x && mx < (card.x + card.width) && my > card.y && my < (card.y + card.height)) 
-	{ 
-		ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
-		if (card.bomb==1){
-		if(soundAble)
-		bombAudio.play();
-		
-		}else{
-		if(soundAble)
-		clickCardAudio.play();
+			//not bomb and first click: 0
+			}else if(card.bomb==0 && isPassed){
+				if(soundAble) clickCardAudio.play();
+				ctx.drawImage(card.img, card.x, card.y, card.width, card.height);
+			}
+			break;
 		}
-		break;
-	}
-} 
+	} 
 
-if (i < matrix.length){ 
-    //the card is bomb
-	if (card.bomb==1){ 
-	 isPassed=false;
-	gameOver(isPassed);
-	//all clicked card are not bomb
-	}else if (card.bomb==0){
-	numMCard--;
-	if(numMCard==0){score+=500; allCleared(isPassed);}
-	
+	if (i < matrix.length){ 
+		//the card is bomb
+		if (card.bomb==1){ 
+			isPassed=false;
+			gameOver(isPassed);
+			for(var j = 0; j < matrix.length; j++){
+			matrix[j].bomb=2;
+			}
+			
+		//all clicked card are not bomb
+		}else if (card.bomb==0){
+			numMCard--;
+			//not bomb and have clicked: 2
+			card.bomb=2;
+			//pass the level
+			if(numMCard==0){
+				score+=500; 
+				document.getElementById("score").innerHTML=score;
+				for(var j = 0; j < matrix.length; j++){
+				matrix[j].bomb=2;
+				}
+				canvas.removeEventListener('click', clickCard, false);
+				if(level<10){
+					if(soundAble)passLevelAudio.play();
+						timer=clearInterval(timer);	
+						setTimeout(function(){
+						
+							level++;
+							initial();	
+							
+						},1000);
+				}else if(level==10){
+					allCleared(isPassed);
+				}
+		
+			}
+		}
+	} 
+	//find the pause button
+	if (myX > pauseButtonX && myX < (pauseButtonX + pauseButtonWidth) && myY > pauseButtonY && myY < (pauseButtonY + pauseButtonHeight)){  
+		if (soundAble) buttonAudio.play();
+		//ctx.drawImage(pauseButton, pauseButtonX, pauseButtonY);
+		document.getElementById('pause').style.display = "block";
+		clearInterval(timer);
 	}
-} 
-//find the pause button
-if (mx > pauseButtonX && mx < (pauseButtonX + pauseButtonWidth) && my > pauseButtonY && my < (pauseButtonY + pauseButtonHeight)) 
-{ 	if (soundAble) buttonAudio.play();
-    //ctx.drawImage(pauseButton, pauseButtonX, pauseButtonY);
-	document.getElementById('pause').style.display = "block";
-	clearInterval(timer);
-}
-//find the stop button
-if (mx > stopButtonX && mx < (stopButtonX + stopButtonWidth) && my > stopButtonY && my < (stopButtonY + stopButtonHeight)){ 
-   if (soundAble) buttonAudio.play();
-	document.getElementById('stop').style.display = "block";
-	clearInterval(timer);
-}
+	//find the stop button
+	if (myX > stopButtonX && myX < (stopButtonX + stopButtonWidth) && myY > stopButtonY && myY < (stopButtonY + stopButtonHeight)){ 
+	   if (soundAble) buttonAudio.play();
+		document.getElementById('stop').style.display = "block";
+		clearInterval(timer);
+	}
 } 
 
 //onload function
-function drawMap(){
+function onloadPage(){
+level=1;
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
 
 	render();
 	
 	//sound able: parse from URL
-	soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
-	soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	//soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
+	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	soundAble=((getCookie("soundCookie")=="true")? true :false);
 	if(soundAble){
 		document.getElementById("sound").src="image/sound.png";
 	}else{
@@ -259,21 +587,44 @@ function drawMap(){
 	checkAudio = setInterval(function(){checkReadyState();},1000);
 }
 function checkReadyState() {
-	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backCard.complete) {
+	var frontsideReady=true;
+	for(var i=0; i<pic.length; i++){
+		frontsideReady=frontsideReady && pic[i].complete ;
+	}
+	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backCard.complete&& frontsideReady) {
 		checkAudio=clearInterval(checkAudio);
 		document.getElementById('loading').style.display = "none";
-		//click listener
-		setTimeout(function() {
-		canvas.addEventListener('click', clickCard, false);	},3500);
 		
-		make_matrix();
-		shuffle();
+		
+		initial();
+		
+		}
+
+}
+function initial(){
+
+ctx.clearRect(0,0,320,480);
+ctx.drawImage(backgroundImage, 0, 0);
+ctx.drawImage(backgroundLevel, 0, 0);
+ctx.drawImage(backgroundShadow, 0, 55);
+ctx.drawImage(pauseButton, pauseButtonX, pauseButtonY);
+ctx.drawImage(stopButton, stopButtonX, stopButtonY);
+
+        //click listener
+		setTimeout(function() {canvas.addEventListener('click', clickCard, false);},3500);
+		
+		createMatrix(level);
+			//game title
+	document.getElementById('level').innerHTML=level;
+	
+		randomCards();
 		
 		//automatically show front-side after 1.5 seconds
 		setTimeout(function() {
 			for (i = 0; i < matrix.length; i++){
 				ctx.drawImage(matrix[i].img, matrix[i].x, matrix[i].y, matrix[i].width, matrix[i].height);
 				if (soundAble) showAllCardsAudio.play();
+				
 				}	 
 		}, 1500);
 		
@@ -282,24 +633,19 @@ function checkReadyState() {
 			for (i = 0; i < matrix.length; i++){
 				matrix[i].draw();
 				if (soundAble) showAllCardsAudio.play();
+				
 				}   
 		}, 3500);
 		
 		update();
-		
-		}
 
 }
-
-/*function main(){
-	update();
-	//render();	
-	requestAnimationFrame(main);
-}*/
-
 //timer
 function update(){
-	setTimeout(function() {
+        minuts=0;
+		second=0;
+		document.getElementById('timer').innerHTML = minuts+":"+second;
+      setTimeout(function() {
 			timer=setInterval(function(){
 				second++;
 				if(second==60){
@@ -312,14 +658,6 @@ function update(){
 			},1000);
     }, 3500);
 }
-
-// Cross-browser support for requestAnimationFrame
-
-//requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
-
-//automatically update the score and timer
-//requestAnimationFrame(main);
-
 
 function render(){
 	//background image;
@@ -337,6 +675,11 @@ function render(){
 	backgroundShadow.src="image/gameBackground.png";
 	ctx.drawImage(backgroundShadow, 0, 55);
 	
+	//frontSide of cards
+	for(var i=0;i<pictures.length;i++){
+		pic[i] = new Image();
+		pic[i].src=pictures[i];
+	}
 	//backSide of cards
 	backCard=new Image();
     backCard.src="image/back01.png";
@@ -359,10 +702,7 @@ function render(){
 
 function gameOver(isPassed) {
 	if(!isPassed){
-		//window.location.href="gameOver.html?scores="+score;
-		//backgroundAudio.pause();
-		//gameOverAudio.currentTime = 0;
-		//gameOverAudio.play();
+		
 		setTimeout(function() {
 			backgroundAudio.pause();
 			gameOverAudio.currentTime = 0;
@@ -370,7 +710,7 @@ function gameOver(isPassed) {
 			document.getElementById('gameOver').style.display = "block";
 			document.getElementById("scoreGameOver").innerHTML=score;
 		},500);
-		clearInterval(timer);
+		timer=clearInterval(timer);
 	}
 
 }
@@ -387,10 +727,30 @@ function allCleared(isPassed) {
 		clearInterval(timer);
 	}
 }
+function getCookie(cookieName){
+	if (document.cookie.length>0)
+	{
+		cookieStart=document.cookie.indexOf(cookieName + "=");
+		if (cookieStart!=-1)
+		{
+			cookieStart=cookieStart + cookieName.length+1;
+			cookieEnd=document.cookie.indexOf(";",cookieStart);
+			if (cookieEnd==-1) cookieEnd=document.cookie.length;
+			return unescape(document.cookie.substring(cookieStart,cookieEnd));
+		}
+	}
+	return "";
+}
+function setCookie(cookieName,cookieValue,expireDays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expireDays);
+	document.cookie=cookieName+ "=" +escape(cookieValue)+
+	((expireDays==null) ? "" : ";expires="+exdate.toGMTString());
+}
 </script>
 </head>
 
-<body onload="drawMap()">
+<body onload="onloadPage()">
 <!--canvas-->
 <canvas id="myCav" width="320" height="480"
 style="border:1px solid #c3c3c3;">
@@ -412,22 +772,26 @@ Your browser does not support the canvas element.
 <!--game over page-->
 <div id="gameOver">
 <p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span></span></p>
-<img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
+<img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){
+document.getElementById('gameOver').style.display='none';
+gameOverAudio.pause();
+if(soundAble)backgroundAudio.play();
+isPassed = true;
+matrix = []; 
+level=1;
+score=0;
+minuts=0; 
+second=0;
+canvas.removeEventListener('click', clickCard, false);
+initial();
+
+document.getElementById('score').innerHTML=score;
+},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){document.getElementById('gameOver').style.display='none'; document.getElementById('stopNoBack').style.display = 'block';},500);
+setTimeout(function(){window.location.href='homepage.html';},500);
 
-">
-</div>
-<!--stop page cannot comeback-->
-<div id="stopNoBack">
-<p>Are you sure to quit<br> this game?</p>
-<img class="leftButton" src="image/yesButton.png" alt="yes button" width="100" height="41"  onclick="if (soundAble) buttonAudio.play();timer=clearInterval(timer);setTimeout(function(){window.location.href='homepage.html';},500);">
-<img class="rightButton" src="image/noButton.png" alt="no button" width="100" height="41" onclick="
-	if (soundAble) buttonAudio.play();
-	timer=clearInterval(timer);
-	setTimeout(function(){window.location.href='game.html';},500);
- ">
+"><!--window.location.href='game.html';-->
 </div>
 
 <!--all cleared page-->
@@ -436,7 +800,7 @@ setTimeout(function(){document.getElementById('gameOver').style.display='none'; 
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='game.html';},500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){document.getElementById('allCleared').style.display='none'; document.getElementById('stopNoBack').style.display = 'block';},500);
+setTimeout(function(){window.location.href='homepage.html';},500);
  ">
 </div>
 <!--pause page-->
@@ -447,9 +811,11 @@ if(numClickSound%2==1){
 backgroundAudio.pause();
 
 soundAble=false;
+setCookie('soundCookie',soundAble,365);
 document.getElementById('sound').src='image/nosound.png';
 }else{
 soundAble=true;
+setCookie('soundCookie',soundAble,365);
 backgroundAudio.play();
 document.getElementById('sound').src='image/sound.png';
 }">
@@ -484,7 +850,7 @@ timer=setInterval(function(){
 </div>
 
 <!--loading page-->
-<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<br><br>Please wait</div>
 
 </body>
 

@@ -27,8 +27,8 @@ var soundButtonWidth=45;
 var soundButtonHeight=47;
 var soundAble=true;
 var numClickSound=0;
-
-function drawPage(){
+//onload function
+function onloadPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
 	//background image;
@@ -77,6 +77,7 @@ function drawPage(){
 	buttonAudio.load();
 	checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	
+	setCookie("soundCookie",soundAble,365);
 }
 function checkReadyState() {
 	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && pic4.complete) {
@@ -89,51 +90,62 @@ function checkReadyState() {
 		ctx.drawImage(pic4, 160, 240);
 		ctx.drawImage(playButton, buttonX, buttonY);
 		ctx.drawImage(soundButton, soundButtonX, soundButtonY);
+		
 		//button listener
-	canvas.addEventListener('click', clickButton, false);
+		canvas.addEventListener('click', clickButton, false);
 
 	}
 }
 function clickButton(ev){
-var mx; 
-var my; 
+var myX; 
+var myY; 
 
 var i; 
 
 if (ev.layerX || ev.layerX == 0) { // Firefox 
-mx = ev.layerX; 
-my = ev.layerY; 
+myX = ev.layerX; 
+myY = ev.layerY; 
 } else if (ev.offsetX || ev.offsetX == 0) { // Opera 
-mx = ev.offsetX; 
-my = ev.offsetY; 
+myX = ev.offsetX; 
+myY = ev.offsetY; 
 } 
-if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
+if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) 
 		{ 
 	if(soundAble) buttonAudio.play();
 	ctx.drawImage(playClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
+	setTimeout(function(){window.location.href="rulesPage.html"},500);
+	//setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
 	}
-if(mx > soundButtonX && mx < (soundButtonX + soundButtonWidth) && my > soundButtonY && my < (soundButtonY + soundButtonHeight)){
+if(myX > soundButtonX && myX < (soundButtonX + soundButtonWidth) && myY > soundButtonY && myY < (soundButtonY + soundButtonHeight)){
 numClickSound++;
 if(numClickSound%2==1){
 backgroundAudio.pause();
 
 soundAble=false;
+setCookie("soundCookie",soundAble,365);
 ctx.drawImage(nosoundButton, soundButtonX, soundButtonY);
+
 }else{
 soundAble=true;
 backgroundAudio.play();
+setCookie("soundCookie",soundAble,365);
 ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 }
 
 }
 
 }
+function setCookie(cookieName,cookieValue,expireDays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expireDays);
+	document.cookie=cookieName+ "=" +escape(cookieValue)+
+	((expireDays==null) ? "" : ";expires="+exdate.toGMTString());
+}
 
 </script>
 </head>
 
-<body onload="drawPage()">
+<body onload="onloadPage()">
 
 <canvas id="myCav" width="320" height="480"
 style="border:1px solid #c3c3c3;">
@@ -150,7 +162,7 @@ Your browser does not support the canvas element.
 <img src="image/background0.png" alt="background image" width="320" height="480" >
 </div>
 
-<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<br><br>Please wait</div>
 </body>
 
 </html>

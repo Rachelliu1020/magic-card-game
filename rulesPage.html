@@ -13,41 +13,16 @@ var backgroundAudio;
 var startButton;
 var startClicked;
 var soundAble=true;
-/*
-function wrapText(ctx, text, x, y, maxWidth, lineHeight) {         
-var words = text.split(" ");         
-var line = "";
-        for(var n = 0; n < words.length; n++) {           
-		var testLine = line + words[n] + " ";           
-		var metrics = ctx.measureText(testLine);           
-		var testWidth = metrics.width;           
-		if(testWidth > maxWidth) {             
-			ctx.fillText(line, x, y);
-            line = words[n] + " ";             
-			y += lineHeight;
-          }else {
-            line = testLine;
-          }
-        }
-        ctx.fillText(line, x, y);       
-}
-*/
-function drawPage(){
+
+function onloadPage(){
 	canvas = document.getElementById("myCav");
 	ctx = canvas.getContext("2d");
 	//background image;
     backgroundImage=new Image();
 	backgroundImage.src="image/background0.png";
 	ctx.drawImage(backgroundImage, 0, 0);
-checkAudioImage = setInterval(function(){checkReadyState();},1000);
-
-	//rules
-	//rules=new Image();
-	//rules.src="image/rulesBackground.png";
-	//ctx.drawImage(rules, 0, 20);
-	
-	
-	 
+	checkAudioImage = setInterval(function(){checkReadyState();},1000);
+ 
 	//start button
 	buttonX=70;
 	buttonY=400;
@@ -59,27 +34,29 @@ checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	startClicked.src="image/startClicked.png";
 	
 	//pause soundAble in URL
-	soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
-	soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	//soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
+	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	soundAble=((getCookie("soundCookie")=="true")? true :false);
 	//background audio
 	backgroundAudio = new Audio("sounds/homeBg.wav");
 	backgroundAudio.loop = true;
 	backgroundAudio.volume = .25;
 	backgroundAudio.load();
 	if(soundAble){
-	
-	backgroundAudio.play();}else{backgroundAudio.pause();}
-	
-	
+		backgroundAudio.play();
+	}else{
+		backgroundAudio.pause();
+	}
 	
 	//button audio 
 	buttonAudio = new Audio("sounds/buttonClick.wav");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
-
 	
 }
+
+
 function checkReadyState() {
 	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && startButton.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
@@ -87,48 +64,52 @@ function checkReadyState() {
 		document.getElementById('rules').style.display = "block";
 		ctx.drawImage(startButton, buttonX, buttonY);
 		
-	//draw rules words
-	//maxWidth=300;
-	//lineHeight=30;
-	//ctx.font="25px Comic Sans MS";
-    //ctx.fillStyle = "#01294d";
-	//ctx.textAlign = "center";
-	//ctx.fillText("click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.", canvas.width/2, canvas.height/2);
-	//text="click to reveal the cards that do not contain the bombs. You score more if you can reveal cards with identical objects consecurively.";
-	 //wrapText(ctx, text, canvas.width/2, 100, maxWidth, lineHeight);
-
 		//button listener
-	canvas.addEventListener('click', clickButton, false);
+		canvas.addEventListener('click', clickButton, false);
 
 	}
 }
 function clickButton(ev){
-var mx; 
-var my; 
+var myX; 
+var myY; 
 
-var i; 
-
-if (ev.layerX || ev.layerX == 0) { // Firefox 
-mx = ev.layerX; 
-my = ev.layerY; 
-} else if (ev.offsetX || ev.offsetX == 0) { // Opera 
-mx = ev.offsetX; 
-my = ev.offsetY; 
+// Firefox
+if (ev.layerX || ev.layerX == 0) {  
+myX = ev.layerX; 
+myY = ev.layerY; 
+// Opera
+} else if (ev.offsetX || ev.offsetX == 0) {  
+myX = ev.offsetX; 
+myY = ev.offsetY; 
 } 
-if (mx > buttonX && mx < (buttonX + buttonWidth) && my > buttonY && my < (buttonY + buttonHeight)) 
+if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) 
 		{ 
-	if(soundAble)buttonAudio.play();
+	if(soundAble) buttonAudio.play();
 	ctx.drawImage(startClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
+	setTimeout(function(){window.location.href="game.html";},500);
+	//setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
 	
 	}
 
 }
-
+function getCookie(cookieName){
+	if (document.cookie.length>0)
+	{
+		cookieStart=document.cookie.indexOf(cookieName + "=");
+		if (cookieStart!=-1)
+		{
+			cookieStart=cookieStart + cookieName.length+1;
+			cookieEnd=document.cookie.indexOf(";",cookieStart);
+		if (cookieEnd==-1) cookieEnd=document.cookie.length;
+		return unescape(document.cookie.substring(cookieStart,cookieEnd));
+		}
+	}
+	return "";
+}
 </script>
 </head>
 
-<body onload="drawPage()">
+<body onload="onloadPage()">
 
 <canvas id="myCav" width="320" height="480"
 style="border:1px solid #c3c3c3;">
@@ -145,7 +126,7 @@ Your browser does not support the canvas element.
 <p>Click to reveal the cards that do not contain the bombs. You score more if you can reveal cards in a very short time.</p>
 </div>
 <!--loading page-->
-<div class="loading" id="loading">LOADING...<p>Please wait</p></div>
+<div id="loading">LOADING...<br><br>Please wait</div>
 </body>
 
 </html>
