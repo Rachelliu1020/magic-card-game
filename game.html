@@ -27,6 +27,7 @@ var minuts=0;
 var second=0;
 var clickAble;
 var backCard; 
+var backObj=[];
 var card; 
    
 //sounds
@@ -62,7 +63,7 @@ var stopButtonWidth=100;
 //level
 
 var status=0;
-
+var backPics=["image/back01.png","image/back02.png","image/back03.png","image/back04.png"];
 var pictures = [ 
 "image/iconbomb0.png","image/icon023.png",
 "image/icon022.png","image/icon021.png",
@@ -117,7 +118,10 @@ function createMatrix(level){
 	pictures[p]=pictures[q];
 	pictures[q]=temp;
 	}
-	
+	for(var i=0;i<3*backPics.length;i++){
+	var b = Math.floor(Math.random() * backPics.length);
+	backCard=backObj[b];
+	}
 	
 	switch(level){
 	//Level 1: 2*2 matrix, 1 bomb,3 Magic Cards
@@ -588,10 +592,14 @@ level=1;
 }
 function checkReadyState() {
 	var frontsideReady=true;
+	var backsideReady=true;
 	for(var i=0; i<pic.length; i++){
 		frontsideReady=frontsideReady && pic[i].complete ;
 	}
-	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backCard.complete&& frontsideReady) {
+	for(var i=0; i<backPics.length; i++){
+		backsideReady=backsideReady && backObj[i].complete ;
+	}
+	if (gameOverAudio.readyState == 4 && backgroundAudio.readyState == 4 && showAllCardsAudio.readyState == 4&& clickCardAudio.readyState == 4&& bombAudio.readyState == 4 && allClearedAudio.readyState == 4 && passLevelAudio.readyState ==4 && backgroundImage.complete&&backsideReady&& frontsideReady) {
 		checkAudio=clearInterval(checkAudio);
 		document.getElementById('loading').style.display = "none";
 		
@@ -681,8 +689,10 @@ function render(){
 		pic[i].src=pictures[i];
 	}
 	//backSide of cards
-	backCard=new Image();
-    backCard.src="image/back01.png";
+	for(var i=0;i<backPics.length;i++){
+		backObj[i] = new Image();
+		backObj[i].src=backPics[i];
+	}
 	
 	//game title
 	document.getElementById('level').innerHTML=level;
