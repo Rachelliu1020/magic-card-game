@@ -340,7 +340,7 @@ function createMatrix(level){
 	for(var i=0;i<cardMatrix.length;i++){
 		var bomb=0;
 		pic[i].src=cardMatrix[i];
-		if(i==0){ bomb=1;}
+		if(i<numBomb){bomb=1;}
 		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
 		matrix.push(card);
 
@@ -369,7 +369,7 @@ function createMatrix(level){
 	for(var i=0;i<cardMatrix.length;i++){
 		var bomb=0;
 		pic[i].src=cardMatrix[i];
-		if(i==0){ bomb=1;}
+		if(i<numBomb){bomb=1;}
 		card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
 		matrix.push(card);
 
@@ -398,7 +398,7 @@ function createMatrix(level){
 		for(var i=0;i<cardMatrix.length;i++){
 			var bomb=0;
 			pic[i].src=cardMatrix[i];
-			if(i==0){ bomb=1;}
+			if(i<numBomb){bomb=1;}
 			card=new Cards(cardX,cardY,cardWidth,cardHeight,pic[i],i,bomb);
 			matrix.push(card);
 
@@ -624,6 +624,7 @@ ctx.drawImage(stopButton, stopButtonX, stopButtonY);
 			for (i = 0; i < matrix.length; i++){
 				ctx.drawImage(matrix[i].img, matrix[i].x, matrix[i].y, matrix[i].width, matrix[i].height);
 				if (soundAble) showAllCardsAudio.play();
+				
 				}	 
 		}, 1500);
 		
@@ -632,6 +633,7 @@ ctx.drawImage(stopButton, stopButtonX, stopButtonY);
 			for (i = 0; i < matrix.length; i++){
 				matrix[i].draw();
 				if (soundAble) showAllCardsAudio.play();
+				
 				}   
 		}, 3500);
 		
@@ -780,7 +782,9 @@ level=1;
 score=0;
 minuts=0; 
 second=0;
+canvas.removeEventListener('click', clickCard, false);
 initial();
+
 document.getElementById('score').innerHTML=score;
 },500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
