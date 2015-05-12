@@ -118,10 +118,10 @@ function createMatrix(level){
 	pictures[p]=pictures[q];
 	pictures[q]=temp;
 	}
-	for(var i=0;i<3*backPics.length;i++){
+	
 	var b = Math.floor(Math.random() * backPics.length);
 	backCard=backObj[b];
-	}
+	
 	
 	switch(level){
 	//Level 1: 2*2 matrix, 1 bomb,3 Magic Cards
@@ -491,8 +491,11 @@ function clickCard(ev){
 			if(numMCard==0){
 				score+=500; 
 				document.getElementById("score").innerHTML=score;
+				
+				
 				for(var j = 0; j < matrix.length; j++){
-				matrix[j].bomb=2;
+						
+					matrix[j].bomb=2;	
 				}
 				canvas.removeEventListener('click', clickCard, false);
 				if(level<10){
