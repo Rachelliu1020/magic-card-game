@@ -14,17 +14,18 @@ var backgroundImage;
 var pic1;
 var pic2;
 var pic3;
-var pic4;
+var soundButton;
+
 var playClicked;
 //play button 
 var buttonX=60;
 var buttonY=370;
 var buttonWidth=192;
 var buttonHeight=52;
-var soundButtonX=230;
-var soundButtonY=120;
-var soundButtonWidth=45;
-var soundButtonHeight=47;
+var soundButtonX=160;
+var soundButtonY=240;
+var soundButtonWidth=95;
+var soundButtonHeight=95;
 var soundAble=true;
 var numClickSound=0;
 //onload function
@@ -49,21 +50,18 @@ function onloadPage(){
 	
 	pic3=new Image();
 	pic3.src="image/info.png";
-
-	pic4=new Image();
-	pic4.src="image/ssound.png";
-	
+    //sound button
+	soundButton=new Image();
+	soundButton.src="image/ssound.png";
+	nosoundButton=new Image();
+	nosoundButton.src="image/nossound.png";
 	
 	//play button
 	playButton=new Image();
 	playButton.src="image/playButton.png";
 	playClicked=new Image();
 	playClicked.src="image/playClicked.png";
-	//sound button 
-	soundButton=new Image();
-	soundButton.src="image/sound.png";
-	nosoundButton=new Image();
-	nosoundButton.src="image/nosound.png";
+	 
 	//background audio
 	backgroundAudio = new Audio("sounds/homeBg.wav");
 	backgroundAudio.loop = true;
@@ -80,16 +78,16 @@ function onloadPage(){
 	setCookie("soundCookie",soundAble,365);
 }
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && pic4.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && soundButton.complete && nosoundButton.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		ctx.drawImage(gameName, 15, 40);
 		ctx.drawImage(pic1, 60, 140);
 		ctx.drawImage(pic2, 160, 140);
 		ctx.drawImage(pic3, 60, 240);
-		ctx.drawImage(pic4, 160, 240);
-		ctx.drawImage(playButton, buttonX, buttonY);
 		ctx.drawImage(soundButton, soundButtonX, soundButtonY);
+		ctx.drawImage(playButton, buttonX, buttonY);
+		//ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 		
 		//button listener
 		canvas.addEventListener('click', clickButton, false);
@@ -99,8 +97,6 @@ function checkReadyState() {
 function clickButton(ev){
 var myX; 
 var myY; 
-
-var i; 
 
 if (ev.layerX || ev.layerX == 0) { // Firefox 
 myX = ev.layerX; 
