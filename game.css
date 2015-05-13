@@ -104,7 +104,7 @@ font-weight:bold;
 font-size: 24px;
 cursor: default;
 }
-#gameOver,#pause,#stop,#allCleared,#about{
+#gameOver,#pause,#stop,#allCleared{
 position: absolute;
 background-color:rgba(0,0,0,0.6);
 top: 0px;
@@ -115,9 +115,24 @@ width:320px;
 height:480px;
 display: none;
 }	
+#about{
+position: absolute;
+background-image:url(image/background0.png);
+background-position:0 0;
+background-repeat:no-repeat;
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}	
 #scorePage {
 position: absolute;
-background-color:rgba(0,0,0,0.6);
+background-image:url(image/background0.png);
+background-position:0 0;
+background-repeat:no-repeat;
 top: 0px;
 left: 0px;
 right:0px;
@@ -130,6 +145,7 @@ display: none;
 /*background-color:rgba(255,0,0,0.6);*/
 margin:auto;
 background-color:rgba(255,255,255,0.8);
+
 width:280px;
 height:360px;
 text-align:center;
