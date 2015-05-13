@@ -12,8 +12,8 @@ var buttonAudio;
 var backgroundAudio;
 var backgroundImage;
 var pic1;
-var pic2;
-var pic3;
+var scoreButton;
+var aboutButton;
 var soundButton;
 
 var playClicked;
@@ -22,10 +22,22 @@ var buttonX=60;
 var buttonY=370;
 var buttonWidth=192;
 var buttonHeight=52;
+//sound button
 var soundButtonX=160;
 var soundButtonY=240;
 var soundButtonWidth=95;
 var soundButtonHeight=95;
+//about button
+var aboutButtonX=60;
+var aboutButtonY=240;
+var aboutButtonWidth=95;
+var aboutButtonHeight=95;
+//score button
+var scoreButtonX=160;
+var scoreButtonY=140;
+var scoreButtonWidth=95;
+var scoreButtonHeight=95;
+
 var soundAble=true;
 var numClickSound=0;
 //onload function
@@ -44,12 +56,14 @@ function onloadPage(){
 	pic1=new Image();
 	pic1.src="image/bomb.png";
 
-	pic2=new Image();
-	pic2.src="image/score.png";
+	scoreButton=new Image();
+	scoreButton.src="image/score.png";
+	
+	//about button
+	aboutButton=new Image();
+	aboutButton.src="image/info.png";
 	
 	
-	pic3=new Image();
-	pic3.src="image/info.png";
     //sound button
 	soundButton=new Image();
 	soundButton.src="image/ssound.png";
@@ -78,13 +92,13 @@ function onloadPage(){
 	setCookie("soundCookie",soundAble,365);
 }
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && pic2.complete && pic3.complete && soundButton.complete && nosoundButton.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && scoreButton.complete && aboutButton.complete && soundButton.complete && nosoundButton.complete&&document.getElementById("backButton").complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		ctx.drawImage(gameName, 15, 40);
 		ctx.drawImage(pic1, 60, 140);
-		ctx.drawImage(pic2, 160, 140);
-		ctx.drawImage(pic3, 60, 240);
+		ctx.drawImage(scoreButton, scoreButtonX, scoreButtonY);
+		ctx.drawImage(aboutButton, aboutButtonX, aboutButtonY);
 		ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 		ctx.drawImage(playButton, buttonX, buttonY);
 		//ctx.drawImage(soundButton, soundButtonX, soundButtonY);
@@ -105,6 +119,7 @@ myY = ev.layerY;
 myX = ev.offsetX; 
 myY = ev.offsetY; 
 } 
+//click play button
 if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) 
 		{ 
 	if(soundAble) buttonAudio.play();
@@ -112,6 +127,8 @@ if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (bu
 	setTimeout(function(){window.location.href="rulesPage.html"},500);
 	//setTimeout(function(){window.location.href="rulesPage.html?sound="+soundAble;},500);
 	}
+	
+//click the sound button image
 if(myX > soundButtonX && myX < (soundButtonX + soundButtonWidth) && myY > soundButtonY && myY < (soundButtonY + soundButtonHeight)){
 numClickSound++;
 if(numClickSound%2==1){
@@ -129,8 +146,19 @@ ctx.drawImage(soundButton, soundButtonX, soundButtonY);
 }
 
 }
-
+//click about button image
+if (myX > aboutButtonX && myX < (aboutButtonX + aboutButtonWidth) && myY > aboutButtonY && myY < (aboutButtonY + aboutButtonHeight)){ 
+	if(soundAble) buttonAudio.play();
+	document.getElementById('about').style.display='block';
+	}
+	//click score button image
+if (myX > scoreButtonX && myX < (scoreButtonX + scoreButtonWidth) && myY > scoreButtonY && myY < (scoreButtonY + scoreButtonHeight)){ 
+	if(soundAble) buttonAudio.play();
+	document.getElementById('scorePage').style.display='block';
+	}
 }
+
+
 function setCookie(cookieName,cookieValue,expireDays){
 	var exdate=new Date();
 	exdate.setDate(exdate.getDate()+expireDays);
@@ -159,6 +187,109 @@ Your browser does not support the canvas element.
 </div>
 
 <div id="loading">LOADING...<br><br>Please wait</div>
+
+<!--about page-->
+<div id="about">
+<p><b style="font-size:25px;">About</b> 
+<br>
+Magic Card<br>
+Coryright &copy; 2015 Magician.<br>
+<br>
+Project Magager:<br>
+Cui Liu<br>
+<br>
+Lead Programmer:<br>
+Rui Liu<br>
+<br>
+Programmers:<br>
+Jing Yang<br>
+Kwanchanok Sonsoi<br>
+<br>
+Graphic Designer:<br>
+Lingzhu Yu<br>
+<br>
+magician0015@gmail.com
+</p>
+
+<img class="backButton" id="backButton" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton').src='image/backClicked.png';
+   setTimeout(function(){
+		document.getElementById('about').style.display='none';
+		document.getElementById('backButton').src='image/backButton.png';
+				},500);">
+</div>
+
+<!--score page-->
+<div id="scorePage">
+<?php
+//Start session
+	session_start();
+	
+	//Include database connection details
+	require_once('config.php');
+
+	//Array to store validation errors
+	$errmsg_arr = array();
+	
+	//Validation error flag
+	$errflag = false;
+	
+	//Connect to mysql server
+	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+	if(!$link) {
+		die('Failed to connect to server: ' . mysql_error());
+	}
+	
+	//Select database
+	$db = mysql_select_db(DB_DATABASE);
+	if(!$db) {
+		die("Unable to select database");
+	}
+	//rank query 
+		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC, datetime ASC";
+		$resultScore=mysql_query($qryScore);
+		$result_length = mysql_num_rows($resultScore);
+		$lastScore=0;
+		$counter=0;
+?>
+
+<table border="0" align="center" bgcolor="#CCCCCC">
+<caption style="font-size:20px;font-weight:bold;background-color:rgba(255,255,255,0.8);">World's highest Scores</caption>
+<tr>
+<td align="center" bgcolor="#E6E6E6"><strong>Rank</strong></td>
+<td align="center" bgcolor="#E6E6E6"><strong>Name</strong></td>
+<td align="center" bgcolor="#E6E6E6"><strong>Score</strong></td>
+</tr>
+
+<?php
+	for($i = 1; $i <= $result_length; $i++){
+		$counter++;
+		$row = mysql_fetch_array($resultScore);
+		 
+		if($row['user_score']==$lastScore){$i--;}
+		 
+		if($counter<15||$counter==15){	 
+?>
+
+<tr>
+<td align="center" bgcolor="#FFFFFF"><?php echo $i; ?></td>
+<td align="center" bgcolor="#FFFFFF"><?php echo $row['user_name']; ?></td>
+<td align="center" bgcolor="#FFFFFF"><?php echo $row['user_score']; ?></td>
+</tr>
+
+<?php
+       }
+		 $lastScore=$row['user_score'];
+	}
+?>
+</table>
+
+
+<img class="backButton" id="backButton" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton').src='image/backClicked.png';
+   setTimeout(function(){
+		document.getElementById('scorePage').style.display='none';
+		document.getElementById('backButton').src='image/backButton.png';
+				},500);">
+</div>
 </body>
 
 </html>

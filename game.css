@@ -56,7 +56,7 @@ font-family: Comic Sans MS, sans-serif;
 cursor: default;
 }
 
-#rules {
+#rules,#rankArea {
 position: absolute;
 top: 0px;
 left: 0px;
@@ -66,6 +66,29 @@ width:320px;
 
 display: none;
 }
+#rankArea table{
+background-color:rgba(255,255,255,0.6);
+text-align:center;
+color: #01294d;
+font-family: Comic Sans MS, sans-serif;
+font-size: 15px;
+cursor: default;
+width:200px;
+max-height:200px;
+}
+#rankArea p{
+background-color:rgba(255,255,255,0.6);
+margin-top:20px;
+width:280px;
+height:50px;
+text-align:center;
+color: #01294d;
+padding-right:20px;
+padding-left:20px;
+font-family: Comic Sans MS, sans-serif;
+font-size: 24px;
+cursor: default;
+}
 #rules p{
 background-color:rgba(255,255,255,0.6);
 margin-top:35px;
@@ -73,9 +96,7 @@ width:280px;
 height:280px;
 text-align:center;
 color: #01294d;
-
 padding-top:35px;
-
 padding-right:20px;
 padding-left:20px;
 font-family: Comic Sans MS, sans-serif;
@@ -83,7 +104,7 @@ font-weight:bold;
 font-size: 24px;
 cursor: default;
 }
-#gameOver,#pause,#stop,#allCleared {
+#gameOver,#pause,#stop,#allCleared,#about{
 position: absolute;
 background-color:rgba(0,0,0,0.6);
 top: 0px;
@@ -94,7 +115,90 @@ width:320px;
 height:480px;
 display: none;
 }	
+#scorePage {
+position: absolute;
+background-color:rgba(0,0,0,0.6);
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
+#scorePage table{
+/*background-color:rgba(255,0,0,0.6);*/
+margin:auto;
+background-color:rgba(255,255,255,0.8);
+width:280px;
+height:360px;
+text-align:center;
+color: #01294d;
+padding-right:20px;
+padding-left:20px;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 16px;
+cursor: default;
+}	
+#about p{
+background-color:rgba(255,255,255,0.8);
+margin-top:20px;
+width:280px;
+height:360px;
+text-align:center;
+color: #01294d;
+padding-top:20px;
+padding-right:20px;
+padding-left:20px;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 16px;
+cursor: default;
+}
+.backButton{
+display:block;
+margin:auto;
+cursor: pointer;
+}
+#submitScore{
+position: absolute;
+background-color:rgba(0,0,0,0.6);
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
+#submitScore form{
+background-color:rgba(255,255,255,0.6);
+margin-top:100px;
+width:320px;
+height:210px;
+text-align:center;
+color: #01294d;
+padding-top:30px;
+font-family: Comic Sans MS, sans-serif;
+font-size: 15px;
+cursor: default;
+}
+#submitScore form table{
+/*background-color:rgba(255,0,0,0.6);*/
+margin:auto;
+border-spacing:0 20px;
+}
+#submitScore form table td{
+/*background-color:rgba(255,0,0,0.6);border:1px solid #ff0000;*/
+margin:auto;
+border-spacing:0 20px;
 
+}
+#closeButton{
+margin-left:20px;
+cursor: pointer;
+}
 #gameOver p, #allCleared p{
 background-color:rgba(255,255,255,0.6);
 margin-top:100px;
@@ -103,7 +207,6 @@ height:150px;
 text-align:center;
 color: #01294d;
 padding-top:50px;
-
 font-family: Comic Sans MS, sans-serif;
 font-weight:bold;
 font-size: 30px;
