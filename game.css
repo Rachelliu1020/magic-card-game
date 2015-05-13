@@ -2,6 +2,10 @@
     font-family:'Comic Sans MS';
     src:url(BRLNSDB.TTF);
 }
+@font-face {
+    font-family:'Hobo Std';
+    src:url(HoboStd.otf);
+}
 @media only all and (min-width:320px){
 canvas{
 width:320px;
@@ -157,25 +161,32 @@ font-weight:bold;
 font-size: 16px;
 cursor: default;
 }	
-#about p{
-background-color:rgba(255,255,255,0.8);
-margin-top:20px;
+#aboutContent{
+background-color:rgba(255,255,255,0.6);
+margin-top:0px;
 width:280px;
-height:360px;
+height:395px;
 text-align:center;
 color: #01294d;
-padding-top:20px;
+padding-top:0px;
 padding-right:20px;
 padding-left:20px;
-font-family: Comic Sans MS, sans-serif;
-font-weight:bold;
-font-size: 16px;
+padding-bottom:25px;
+font-family:'Hobo Std', sans-serif;
+/*font-weight:bold;*/
+font-size:18px;
 cursor: default;
 }
+#about p{
+margin-top:-12px;
+padding-top: -10px;
+}
+
 .backButton{
 display:block;
 margin:auto;
-cursor: pointer;
+cursor:pointer;
+margin-top:17px;
 }
 #submitScore{
 position: absolute;
