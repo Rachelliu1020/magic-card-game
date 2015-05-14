@@ -6,14 +6,12 @@
     font-family:'Hobo Std';
     src:url(HoboStd.otf);
 }
-/*@media only all and (min-device-width: 320px) {
-    body {
-background-image: url("image/background1.gif");
+@media screen and (min-device-width:413px){
+body {
+background-image: url("image/background3.gif");
 background-position: center top;
-background-repeat: no-repeat;            
+background-repeat: no-repeat         
 }
-*/
-@media only all and (min-width:320px){
 canvas{
 width:320px;
 height:480px;	
@@ -22,7 +20,9 @@ position: absolute;
 top: 0px;
 left: 0px;
 right:0px;
+
 background: transparent;
+overflow:hidden;
 }
 #images{
 display:none;
@@ -64,7 +64,7 @@ color: #01294d;
 font-family: Comic Sans MS, sans-serif;
 cursor: default;
 }
-/*gamepage-leaderboard.php rank page*/
+
 #rules,#rankArea {
 position: absolute;
 top: 0px;
@@ -72,14 +72,10 @@ left: 0px;
 right:0px;
 margin:auto;
 width:320px;
+
 display: none;
 }
-#rankArea #tableArea2{
-/*background-color:rgba(255,255,255,0.6);*/
-height:350px;
-width:320px;
-}
-#rankArea #tableArea2 table{
+#rankArea table{
 background-color:rgba(255,255,255,0.6);
 text-align:center;
 color: #01294d;
@@ -87,20 +83,19 @@ font-family: Comic Sans MS, sans-serif;
 font-size: 15px;
 cursor: default;
 width:200px;
-max-height:270px;
+max-height:200px;
 }
 #rankArea p{
-vertical-align:middle;
 background-color:rgba(255,255,255,0.6);
 margin-top:20px;
 width:280px;
-height:40px;
+height:50px;
 text-align:center;
 color: #01294d;
 padding-right:20px;
 padding-left:20px;
 font-family: Comic Sans MS, sans-serif;
-font-size: 20px;
+font-size: 24px;
 cursor: default;
 }
 #rules p{
@@ -128,46 +123,20 @@ margin:auto;
 width:320px;
 height:480px;
 display: none;
-}
-
-/*about page*/
-#about {
-        position: absolute;
-        background-image: url(image/background0.gif);
-        background-position: 0 0;
-        background-repeat: no-repeat;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        margin: auto;
-        width: 320px;
-        height: 480px;
-        display: none;
-    }
-
-    #aboutContent {
-        background-color: rgba(255,255,255,0.6);
-        margin-top: 0px;
-        width: 280px;
-        height: 395px;
-        text-align: center;
-        color: #01294d;
-        padding-top: 0px;
-        padding-right: 20px;
-        padding-left: 20px;
-        padding-bottom: 25px;
-        font-family: 'Hobo Std', sans-serif;
-        /*font-weight:bold;*/
-        font-size: 18px;
-        cursor: default;
-    }
-
-    #about p {
-        margin-top: -12px;
-        padding-top: -10px;
-    }	
-	
-/*homepage-score page*/	
+}	
+#about{
+position: absolute;
+background-image:url(image/background0.gif);
+background-position:0 0;
+background-repeat:no-repeat;
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}	
 #scorePage {
 position: absolute;
 background-image:url(image/background0.gif);
@@ -181,32 +150,48 @@ width:320px;
 height:480px;
 display: none;
 }
-#scorePage #tableArea{
-/*background-color:rgba(255,255,255,0.8);*/
-width:280px;
-height:400px;
-padding-right:20px;
-padding-left:20px;
-}
-#scorePage #tableArea table{
+#scorePage table{
 /*background-color:rgba(255,0,0,0.6);*/
-margin-left:auto;
-margin-right:auto;
-width:200px;
+margin:auto;
+background-color:rgba(255,255,255,0.8);
+
+width:280px;
+height:360px;
 text-align:center;
 color: #01294d;
-background-color:rgba(255,255,255,0.8);
+padding-right:20px;
+padding-left:20px;
 font-family: Comic Sans MS, sans-serif;
 font-weight:bold;
 font-size: 16px;
 cursor: default;
 }	
+#aboutContent{
+background-color:rgba(255,255,255,0.6);
+margin-top:0px;
+width:280px;
+height:395px;
+text-align:center;
+color: #01294d;
+padding-top:0px;
+padding-right:20px;
+padding-left:20px;
+padding-bottom:25px;
+font-family:'Hobo Std', sans-serif;
+/*font-weight:bold;*/
+font-size:18px;
+cursor: default;
+}
+#about p{
+margin-top:-12px;
+padding-top: -10px;
+}
+
 .backButton{
 display:block;
-margin-top:20px;
-margin-left:auto;
-margin-right:auto;
-cursor: pointer;
+margin:auto;
+cursor:pointer;
+margin-top:17px;
 }
 #submitScore{
 position: absolute;
@@ -228,7 +213,7 @@ text-align:center;
 color: #01294d;
 padding-top:30px;
 font-family: Comic Sans MS, sans-serif;
-font-size: 18px;
+font-size: 15px;
 cursor: default;
 }
 #submitScore form table{
@@ -315,3 +300,4 @@ cursor: default;
 display:block;
 }
 }
+
