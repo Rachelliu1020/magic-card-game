@@ -6,11 +6,11 @@
     font-family:'Hobo Std';
     src:url(HoboStd.otf);
 }
-@media only all and (max-device-width: 374px){
+@media screen and (min-device-width:413px){
 body {
-background-image: url("image/background1.gif");
+background-image: url("image/background3.gif");
 background-position: center top;
-background-repeat: no-repeat;            
+background-repeat: no-repeat         
 }
 canvas{
 width:320px;
@@ -299,3 +299,5 @@ font-size: 30px;
 cursor: default;
 display:block;
 }
+}
+

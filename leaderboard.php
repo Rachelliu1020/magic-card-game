@@ -19,7 +19,7 @@ function onloadPage(){
 	ctx = canvas.getContext("2d");
 	//background image;
     backgroundImage=new Image();
-	backgroundImage.src="image/background0.png";
+	backgroundImage.src="image/background0.gif";
 	ctx.drawImage(backgroundImage, 0, 0);
 	checkAudioImage = setInterval(function(){checkReadyState();},1000);
  
@@ -119,7 +119,7 @@ Your browser does not support the canvas element.
 <div id="images">
 <img src="image/rulesBackground.png" alt="rule background shadow" width="30" height="30">
 <img src="image/backButton.png" alt="back button" width="30" height="30">
-<img src="image/background0.png" alt="background image" width="320" height="480">
+<img src="image/background0.gif" alt="background image" width="320" height="480">
 </div>
 
 <!--loading page-->
