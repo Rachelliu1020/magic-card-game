@@ -251,9 +251,9 @@ magician0015@gmail.com
 		$lastScore=0;
 		$counter=0;
 ?>
-
+<div id="tableArea">
 <table border="0" align="center" bgcolor="#CCCCCC">
-<caption style="font-size:20px;font-weight:bold;background-color:rgba(255,255,255,0.8);">World's highest Scores</caption>
+<caption style="font-size:20px;font-weight:bold;margin-top:10px;">World's highest Scores</caption>
 <tr>
 <td align="center" bgcolor="#E6E6E6"><strong>Rank</strong></td>
 <td align="center" bgcolor="#E6E6E6"><strong>Name</strong></td>
@@ -282,12 +282,12 @@ magician0015@gmail.com
 	}
 ?>
 </table>
+</div>
 
-
-<img class="backButton" id="backButton" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton').src='image/backClicked.png';
+<img class="backButton" id="backButton2" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton2').src='image/backClicked.png';
    setTimeout(function(){
 		document.getElementById('scorePage').style.display='none';
-		document.getElementById('backButton').src='image/backButton.png';
+		document.getElementById('backButton2').src='image/backButton.png';
 				},500);">
 </div>
 </body>

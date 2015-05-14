@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Magic Cards/rules</title>
+<title>Magic Cards/leaderboard</title>
 <link rel="stylesheet" href="game.css">
 <script>
 var ctx; 
@@ -187,9 +187,9 @@ Your browser does not support the canvas element.
 		$lastScore=0;
 		$counter=0;
 ?>
-
+<div id="tableArea2">
 <table border="0" align="center" bgcolor="#CCCCCC">
-<caption style="font-size:20px;font-weight:bold;">World's highest Scores</caption>
+<caption style="font-size:20px;font-weight:bold;margin-top:10px;">World's highest Scores</caption>
 <tr>
 <td align="center" bgcolor="#E6E6E6"><strong>Rank</strong></td>
 <td align="center" bgcolor="#E6E6E6"><strong>Name</strong></td>
@@ -224,12 +224,12 @@ Your browser does not support the canvas element.
 	}
 	?>
 	</table>
-	
+	</div>
 	<?php
 	$resultID=mysql_query("SELECT * FROM leaderboard WHERE id='".$_SESSION['SESS_PLAYER_ID']."'");//SQL
 	if($resultID) {
 			$row = mysql_fetch_array($resultID);
-			echo "<p>Your Rank: ".$row['rank_num']."/t".$row['user_name']. "/t".$row['user_score']."</p>";
+			echo "<p>Your Rank: ".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
 		
 	}
 		//echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
