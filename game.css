@@ -1,0 +1,317 @@
+@font-face {
+    font-family:'Comic Sans MS';
+    src:url(BRLNSDB.TTF);
+}
+@font-face {
+    font-family:'Hobo Std';
+    src:url(HoboStd.otf);
+}
+/*@media only all and (min-device-width: 320px) {
+    body {
+background-image: url("image/background1.gif");
+background-position: center top;
+background-repeat: no-repeat;            
+}
+*/
+@media only all and (min-width:320px){
+canvas{
+width:320px;
+height:480px;	
+margin:auto;
+position: absolute;
+top: 0px;
+left: 0px;
+right:0px;
+background: transparent;
+}
+#images{
+display:none;
+}
+.level {
+position: absolute;
+top: 3px;
+left:0; 
+right:0;
+width:320px;
+margin:auto;
+text-align:center;
+color: #01294d;
+font-family: Comic Sans MS, sans-serif;
+cursor: default;
+font-size:18px;
+}
+.timer {
+position: absolute;
+top: 33px;
+left:0; 
+right:0;
+width:110px;
+margin:auto;
+padding-left:247px;
+color: #01294d;
+font-family: Comic Sans MS, sans-serif;
+cursor: default;
+}
+.score {
+position: absolute;
+top: 33px;
+left: 0;/*30px*/
+right:0;
+margin:auto;
+width:290px;
+padding-left:8px;
+color: #01294d;
+font-family: Comic Sans MS, sans-serif;
+cursor: default;
+}
+/*gamepage-leaderboard.php rank page*/
+#rules,#rankArea {
+position: absolute;
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+display: none;
+}
+#rankArea #tableArea2{
+/*background-color:rgba(255,255,255,0.6);*/
+height:350px;
+width:320px;
+}
+#rankArea #tableArea2 table{
+background-color:rgba(255,255,255,0.6);
+text-align:center;
+color: #01294d;
+font-family: Comic Sans MS, sans-serif;
+font-size: 15px;
+cursor: default;
+width:200px;
+max-height:270px;
+}
+#rankArea p{
+vertical-align:middle;
+background-color:rgba(255,255,255,0.6);
+margin-top:20px;
+width:280px;
+height:40px;
+text-align:center;
+color: #01294d;
+padding-right:20px;
+padding-left:20px;
+font-family: Comic Sans MS, sans-serif;
+font-size: 20px;
+cursor: default;
+}
+#rules p{
+background-color:rgba(255,255,255,0.6);
+margin-top:35px;
+width:280px;
+height:280px;
+text-align:center;
+color: #01294d;
+padding-top:35px;
+padding-right:20px;
+padding-left:20px;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 24px;
+cursor: default;
+}
+#gameOver,#pause,#stop,#allCleared{
+position: absolute;
+background-color:rgba(0,0,0,0.6);
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
+
+/*about page*/
+#about {
+        position: absolute;
+        background-image: url(image/background0.gif);
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        width: 320px;
+        height: 480px;
+        display: none;
+    }
+
+    #aboutContent {
+        background-color: rgba(255,255,255,0.6);
+        margin-top: 0px;
+        width: 280px;
+        height: 395px;
+        text-align: center;
+        color: #01294d;
+        padding-top: 0px;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-bottom: 25px;
+        font-family: 'Hobo Std', sans-serif;
+        /*font-weight:bold;*/
+        font-size: 18px;
+        cursor: default;
+    }
+
+    #about p {
+        margin-top: -12px;
+        padding-top: -10px;
+    }	
+	
+/*homepage-score page*/	
+#scorePage {
+position: absolute;
+background-image:url(image/background0.gif);
+background-position:0 0;
+background-repeat:no-repeat;
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
+#scorePage #tableArea{
+/*background-color:rgba(255,255,255,0.8);*/
+width:280px;
+height:400px;
+padding-right:20px;
+padding-left:20px;
+}
+#scorePage #tableArea table{
+/*background-color:rgba(255,0,0,0.6);*/
+margin-left:auto;
+margin-right:auto;
+width:200px;
+text-align:center;
+color: #01294d;
+background-color:rgba(255,255,255,0.8);
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 16px;
+cursor: default;
+}	
+.backButton{
+display:block;
+margin-top:20px;
+margin-left:auto;
+margin-right:auto;
+cursor: pointer;
+}
+#submitScore{
+position: absolute;
+background-color:rgba(0,0,0,0.6);
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+display: none;
+}
+#submitScore form{
+background-color:rgba(255,255,255,0.6);
+margin-top:100px;
+width:320px;
+height:210px;
+text-align:center;
+color: #01294d;
+padding-top:30px;
+font-family: Comic Sans MS, sans-serif;
+font-size: 18px;
+cursor: default;
+}
+#submitScore form table{
+/*background-color:rgba(255,0,0,0.6);*/
+margin:auto;
+border-spacing:0 20px;
+}
+#submitScore form table td{
+/*background-color:rgba(255,0,0,0.6);border:1px solid #ff0000;*/
+margin:auto;
+border-spacing:0 20px;
+
+}
+#closeButton{
+margin-left:20px;
+cursor: pointer;
+}
+#gameOver p, #allCleared p{
+background-color:rgba(255,255,255,0.6);
+margin-top:100px;
+width:320px;
+height:150px;
+text-align:center;
+color: #01294d;
+padding-top:50px;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 30px;
+cursor: default;
+}	
+#gameOver p span, #allCleared p span{
+font-size:20px;
+}	
+	
+.leftButton {
+display:inline-block;
+margin-left:50px;
+cursor: pointer;
+}
+
+.rightButton {
+display:inline-block;
+margin-left:12px;
+cursor: pointer;
+}
+
+#pause p, #stop p{
+background-color:rgba(255,255,255,0.6);
+margin-top:100px;
+width:320px;
+height:150px;
+text-align:center;
+color: #01294d;
+padding-top:50px;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 24px;
+cursor: default;
+}
+	
+#sound{
+position:absolute;
+left:250px;
+top:73px;
+display:block;
+cursor: pointer;
+}
+
+#loading {
+position: absolute;
+top: 100px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+height:480px;
+color: #01294d;
+/*background-color:white;#FF7F00*/
+text-align:center;
+font-family: Comic Sans MS, sans-serif;
+font-weight:bold;
+font-size: 30px;
+cursor: default;
+display:block;
+}
+}
