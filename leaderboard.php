@@ -229,7 +229,7 @@ Your browser does not support the canvas element.
 			echo "<p>Your Rank:<br>".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
 		
 	}*/
-	echo "<p>Your Rank:<br>".$_SESSION['rankNum']."&nbsp;&nbsp;".$userName. "&nbsp;&nbsp;".$userScore."</p>";
+	echo "<p>Your Score:<br>".$_SESSION['rankNum']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$userName. "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$userScore."</p>";
 		////echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
 		unset($_POST["submit"]);
 		unset($_POST["userName"]);
