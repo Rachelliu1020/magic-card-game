@@ -845,7 +845,7 @@ Your browser does not support the canvas element.
 <div class="level">Level <span id="level">0</span>/10</div>
 <div class="timer">Time: <span id="timer">0:0</span></div>
 <div class="score">Scores: <span id="score">0</span></div>
-<!--game over pagedocument.getElementById('userScore').value=score;-->
+<!--game over page-->
 <div id="gameOver">
 <p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span></span>
 <br><img src="image/uploadscore.png" style="margin-top:15px;" alt="submit scores" width="180" height="41" onclick="
@@ -874,8 +874,10 @@ document.getElementById('score').innerHTML=score;
 if (soundAble) buttonAudio.play();
 setTimeout(function(){window.location.href='homepage.php';},500);
 
-"><!--window.location.href='game.html';window.location.href='game.html';<input type="hidden" id="userScore" name="userScore" value="23">-->
+"><!--window.location.href='game.html';window.location.href='game.html';-->
 </div>
+
+
 <!--submit score page-->
 <div id="submitScore">
 <form name="scoreSubmit" id="scoreSubmit" action="leaderboard.php" method="post">
