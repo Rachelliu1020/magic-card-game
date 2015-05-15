@@ -38,7 +38,7 @@ function onloadPage(){
 	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
 	soundAble=((getCookie("soundCookie")=="true")? true :false);
 	//background audio
-	backgroundAudio = new Audio("sounds/homeBg.wav");
+	backgroundAudio = new Audio("sounds/homeBg.mp3");
 	backgroundAudio.loop = true;
 	backgroundAudio.volume = .25;
 	backgroundAudio.load();
@@ -49,7 +49,7 @@ function onloadPage(){
 	}
 	
 	//button audio 
-	buttonAudio = new Audio("sounds/buttonClick.wav");
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();

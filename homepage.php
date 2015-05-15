@@ -83,7 +83,7 @@ function onloadPage(){
 	backgroundAudio.load();
 	backgroundAudio.play();
 	//button audio 
-	buttonAudio = new Audio("sounds/buttonClick.wav");
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
@@ -232,18 +232,9 @@ magician0015@gmail.com
 <!--score page-->
 <div id="scorePage">
 <?php
-//Start session
-	session_start();
-	
 	//Include database connection details
 	require_once('config.php');
 
-	//Array to store validation errors
-	$errmsg_arr = array();
-	
-	//Validation error flag
-	$errflag = false;
-	
 	//Connect to mysql server
 	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
 	if(!$link) {
@@ -255,8 +246,8 @@ magician0015@gmail.com
 	if(!$db) {
 		die("Unable to select database");
 	}
-	//rank query 
-		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC, datetime ASC";
+	//rank query , datetime ASC
+		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC";
 		$resultScore=mysql_query($qryScore);
 		$result_length = mysql_num_rows($resultScore);
 		$lastScore=0;
@@ -272,9 +263,10 @@ magician0015@gmail.com
 </tr>
 
 <?php
-	for($i = 1; $i <= $result_length; $i++){
+	$i = 1;
+	while($row = mysql_fetch_array($resultScore)){
 		$counter++;
-		$row = mysql_fetch_array($resultScore);
+		
 		 
 		if($row['user_score']==$lastScore){$i--;}
 		 
@@ -290,6 +282,7 @@ magician0015@gmail.com
 <?php
        }
 		 $lastScore=$row['user_score'];
+		 $i++;
 	}
 ?>
 </table>

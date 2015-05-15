@@ -622,22 +622,22 @@ function onloadPage(){
 	gameOverAudio.volume = .25;
 	gameOverAudio.load();
 	//click cards audio
-	clickCardAudio = new Audio("sounds/flipCard.wav");
+	clickCardAudio = new Audio("sounds/flipCard.mp3");
 	clickCardAudio.loop = false;
 	clickCardAudio.volume = 1;
 	clickCardAudio.load();
 	//bomb audio
-	bombAudio = new Audio("sounds/bomb.wav");
+	bombAudio = new Audio("sounds/bomb.mp3");
 	bombAudio.loop = false;
 	bombAudio.volume = .55;
 	bombAudio.load();
 	//click button audio
-	buttonAudio = new Audio("sounds/buttonClick.wav");
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
 	//automatically show all cards audio
-	showAllCardsAudio = new Audio("sounds/autoShowFrontside.wav");
+	showAllCardsAudio = new Audio("sounds/autoShowFrontside.mp3");
 	showAllCardsAudio.loop = false;
 	showAllCardsAudio.volume = .55;
 	showAllCardsAudio.load();
@@ -872,7 +872,7 @@ document.getElementById('score').innerHTML=score;
 },500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){window.location.href='homepage.html';},500);
+setTimeout(function(){window.location.href='homepage.php';},500);
 
 "><!--window.location.href='game.html';window.location.href='game.html';<input type="hidden" id="userScore" name="userScore" value="23">-->
 </div>
@@ -926,7 +926,7 @@ document.getElementById('score').innerHTML=score;
 },500);">
 <img class="rightButton" src="image/stopButton.png" alt="stop button" width="100" height="41" onclick="
 if (soundAble) buttonAudio.play();
-setTimeout(function(){window.location.href='homepage.html';},500);
+setTimeout(function(){window.location.href='homepage.php';},500);
  ">
 </div>
 <!--pause page-->
@@ -963,7 +963,7 @@ timer=setInterval(function(){
 <!--stop page-->
 <div id="stop">
 <p>Are you sure to quit<br> this game?</p>
-<img class="leftButton" src="image/yesButton.png" alt="yes button" width="100" height="41"  onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='homepage.html';},500);">
+<img class="leftButton" src="image/yesButton.png" alt="yes button" width="100" height="41"  onclick="if (soundAble) buttonAudio.play();setTimeout(function(){window.location.href='homepage.php';},500);">
 <img class="rightButton" src="image/noButton.png" alt="no button" width="100" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('stop').style.display='none';
 timer=setInterval(function(){
 				second++;
