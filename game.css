@@ -71,13 +71,13 @@ top: 0px;
 left: 0px;
 right:0px;
 margin:auto;
-width:320px;
+width:290px;
 display: none;
 }
 #rankArea #tableArea2{
 /*background-color:rgba(255,255,255,0.6);*/
 height:350px;
-width:320px;
+width:290px;
 }
 #rankArea #tableArea2 table{
 background-color:rgba(255,255,255,0.6);
@@ -86,22 +86,21 @@ color: #01294d;
 font-family: Comic Sans MS, sans-serif;
 font-size: 15px;
 cursor: default;
-width:250px;
+width:290px;
 max-height:270px;
 }
 #rankArea p{
 
-background-color:rgba(255,255,255,0.6);
+background-color:rgba(255,255,255,0.8);
 margin-top:20px;
-width:280px;
+width:290px;
 height:45px;
 text-align:center;
 color: #01294d;
-
-padding-right:20px;
-padding-left:20px;
+padding-right:0px;
+padding-left:0px;
 font-family: Comic Sans MS, sans-serif;
-font-size: 20px;
+font-size: 19px;
 cursor: default;
 }
 #rules p{
@@ -189,19 +188,19 @@ display: none;
 }
 #scorePage #tableArea{
 /*background-color:rgba(255,255,255,0.8);*/
-width:280px;
-height:400px;
-padding-right:20px;
-padding-left:20px;
+width:300px;
+height:380px;
+padding-right:10px;
+padding-left:10px;
 }
 #scorePage #tableArea table{
 /*background-color:rgba(255,0,0,0.6);*/
 margin-left:auto;
 margin-right:auto;
-width:250px;
+width:290px;
 text-align:center;
 color: #01294d;
-background-color:rgba(255,255,255,0.8);
+background-color:rgba(255,255,255,0.7);
 font-family: Comic Sans MS, sans-serif;
 font-weight:bold;
 font-size: 16px;
@@ -209,7 +208,7 @@ cursor: default;
 }	
 .backButton{
 display:block;
-margin-top:20px;
+margin-top:30px;
 margin-left:auto;
 margin-right:auto;
 cursor: pointer;
