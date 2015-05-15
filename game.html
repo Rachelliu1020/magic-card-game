@@ -890,12 +890,10 @@ setTimeout(function(){window.location.href='homepage.php';},500);
 <th>Your Score: </th>
 <td id="scoreDisplay">  </td>
 </tr>
+
 <tr>
-</tr>
-<tr>
-<td colspan="2"><input type="image" src="image/submitButton.png" name="submit" alt="submit" id="submit" value="Submit" width="99" height="41">
-<img id="closeButton" src="image/closeButton.png" alt="close button" width="99" height="41" onclick="
-document.getElementById('submitScore').style.display='none';
+<td colspan="2"><input type="image" src="image/submitButton.png" name="submit" value="submit" alt="submit" id="submit" width="99" height="41">
+<img id="closeButton" src="image/closeButton.png" alt="close button" width="99" height="41" onclick="document.getElementById('submitScore').style.display='none';
 if(isPassed)document.getElementById('allCleared').style.display='block';
 else{document.getElementById('gameOver').style.display='block';}
 "></td>

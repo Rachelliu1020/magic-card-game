@@ -253,7 +253,7 @@ magician0015@gmail.com
 ?>
 <div id="tableArea">
 <table border="0" align="center" bgcolor="#CCCCCC">
-<caption style="font-size:20px;font-weight:bold;margin-top:10px;">World's highest Scores</caption>
+<caption style="font-size:20px;font-weight:bold;margin-top:15px;margin-bottom:5px;">World's highest Scores</caption>
 <tr>
 <td align="center" bgcolor="#E6E6E6"><strong>Rank</strong></td>
 <td align="center" bgcolor="#E6E6E6"><strong>Name</strong></td>
