@@ -86,17 +86,18 @@ color: #01294d;
 font-family: Comic Sans MS, sans-serif;
 font-size: 15px;
 cursor: default;
-width:200px;
+width:250px;
 max-height:270px;
 }
 #rankArea p{
-vertical-align:middle;
+
 background-color:rgba(255,255,255,0.6);
 margin-top:20px;
 width:280px;
-height:40px;
+height:50px;
 text-align:center;
 color: #01294d;
+
 padding-right:20px;
 padding-left:20px;
 font-family: Comic Sans MS, sans-serif;
@@ -148,23 +149,26 @@ display: none;
     #aboutContent {
         background-color: rgba(255,255,255,0.6);
         margin-top: 0px;
+		margin-bottom:0;
         width: 280px;
-        height: 395px;
+        height: 375px;
         text-align: center;
         color: #01294d;
         padding-top: 0px;
         padding-right: 20px;
         padding-left: 20px;
         padding-bottom: 25px;
-        font-family: 'Hobo Std', sans-serif;
+        font-family: Hobo Std, sans-serif;
         /*font-weight:bold;*/
-        font-size: 18px;
+        font-size: 16px;
         cursor: default;
     }
 
     #about p {
-        margin-top: -12px;
-        padding-top: -10px;
+	
+	margin-top:0;
+        /*margin-top: -12px;
+        padding-top: -10px;*/
     }	
 	
 /*homepage-score page*/	
@@ -192,7 +196,7 @@ padding-left:20px;
 /*background-color:rgba(255,0,0,0.6);*/
 margin-left:auto;
 margin-right:auto;
-width:200px;
+width:250px;
 text-align:center;
 color: #01294d;
 background-color:rgba(255,255,255,0.8);

@@ -229,7 +229,7 @@ Your browser does not support the canvas element.
 	$resultID=mysql_query("SELECT * FROM leaderboard WHERE id='".$_SESSION['SESS_PLAYER_ID']."'");//SQL
 	if($resultID) {
 			$row = mysql_fetch_array($resultID);
-			echo "<p>Your Rank: ".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
+			echo "<p>Your Rank:<br>".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
 		
 	}
 		//echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
