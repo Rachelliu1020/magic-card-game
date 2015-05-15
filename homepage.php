@@ -250,8 +250,6 @@ magician0015@gmail.com
 		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC";
 		$resultScore=mysql_query($qryScore);
 		$result_length = mysql_num_rows($resultScore);
-		$lastScore=0;
-		$counter=0;
 ?>
 <div id="tableArea">
 <table border="0" align="center" bgcolor="#CCCCCC">
@@ -265,12 +263,8 @@ magician0015@gmail.com
 <?php
 	$i = 1;
 	while($row = mysql_fetch_array($resultScore)){
-		$counter++;
 		
-		 
-		if($row['user_score']==$lastScore){$i--;}
-		 
-		if($counter<15||$counter==15){	 
+		if($i<15||$i==15){	 
 ?>
 
 <tr>
@@ -280,8 +274,7 @@ magician0015@gmail.com
 </tr>
 
 <?php
-       }
-		 $lastScore=$row['user_score'];
+       }		 
 		 $i++;
 	}
 ?>

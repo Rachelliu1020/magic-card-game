@@ -178,8 +178,6 @@ Your browser does not support the canvas element.
 		$resultScore=mysql_query($qryScore);
 		$result_length = mysql_num_rows($resultScore);
 		//$_SESSION['SESS_PLAYER_ID']=$result_length;
-		$lastScore=0;
-		$counter=0;
 ?>
 <div id="tableArea2">
 <table border="0" align="center" bgcolor="#CCCCCC">
@@ -194,17 +192,13 @@ Your browser does not support the canvas element.
 	//for($i = 1; $i <= $result_length; $i++){
 		$i=1;
 		while($row = mysql_fetch_array($resultScore)){
-		$counter++;
-		 
-		 
-		 if($row['user_score']==$lastScore){$i--;}
-		 
+				 
 		 //update rank_num
 		//$sql = "UPDATE leaderboard SET rank_num='".$i."' where id='".$row['id']."'";
 		//mysql_query($sql);
 		if($row['id']==$result_length) {$_SESSION['rankNum']=$i;}
 		
-		if($counter<15||$counter==15){	 
+		if($i<15||$i==15){	 
 		 
 ?>
 
@@ -216,7 +210,6 @@ Your browser does not support the canvas element.
 
 <?php
        }
-		 $lastScore=$row['user_score'];
 		 $i++;
 	}
 	?>
