@@ -65,7 +65,16 @@ font-family: Comic Sans MS, sans-serif;
 cursor: default;
 }
 /*gamepage-leaderboard.php rank page*/
-#rules,#rankArea {
+#rules{
+position: absolute;
+top: 0px;
+left: 0px;
+right:0px;
+margin:auto;
+width:320px;
+display: none;
+}
+#rankArea {
 position: absolute;
 top: 0px;
 left: 0px;
@@ -208,7 +217,14 @@ cursor: default;
 }	
 .backButton{
 display:block;
-margin-top:30px;
+margin-top:15px;
+margin-left:auto;
+margin-right:auto;
+cursor: pointer;
+}
+#backButton2{
+display:block;
+margin-top:40px;
 margin-left:auto;
 margin-right:auto;
 cursor: pointer;
