@@ -10,8 +10,8 @@ var ctx;
 var canvas; 
 var buttonAudio;
 var backgroundAudio;
-var startButton;
-var startClicked;
+var backButton;
+var backClicked;
 var soundAble=true;
 
 function onloadPage(){
@@ -28,17 +28,17 @@ function onloadPage(){
 	buttonY=420;
 	buttonWidth=128;
 	buttonHeight=41;
-	startButton=new Image();
-	startButton.src="image/backButton.png";
-	startClicked=new Image();
-	startClicked.src="image/backClicked.png";
+	backButton=new Image();
+	backButton.src="image/backButton.png";
+	backClicked=new Image();
+	backClicked.src="image/backClicked.png";
 	
 	//pause soundAble in URL
 	//soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
 	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
 	soundAble=((getCookie("soundCookie")=="true")? true :false);
 	//background audio
-	backgroundAudio = new Audio("sounds/homeBg.wav");
+	backgroundAudio = new Audio("sounds/homeBg.mp3");
 	backgroundAudio.loop = true;
 	backgroundAudio.volume = .25;
 	backgroundAudio.load();
@@ -49,7 +49,7 @@ function onloadPage(){
 	}
 	
 	//button audio 
-	buttonAudio = new Audio("sounds/buttonClick.wav");
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
 	buttonAudio.loop = false;
 	buttonAudio.volume = .55;
 	buttonAudio.load();
@@ -58,11 +58,11 @@ function onloadPage(){
 
 
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && startButton.complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && backButton.complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		document.getElementById('rankArea').style.display = "block";
-		ctx.drawImage(startButton, buttonX, buttonY);
+		ctx.drawImage(backButton, buttonX, buttonY);
 		
 		//button listener
 		canvas.addEventListener('click', clickButton, false);
@@ -85,8 +85,8 @@ myY = ev.offsetY;
 if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) 
 		{ 
 	if(soundAble) buttonAudio.play();
-	ctx.drawImage(startClicked, buttonX, buttonY);
-	setTimeout(function(){window.location.href="game.html";},500);
+	ctx.drawImage(backClicked, buttonX, buttonY);
+	setTimeout(function(){window.location.href="homepage.php";},500);
 	//setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
 	
 	}
@@ -137,12 +137,6 @@ Your browser does not support the canvas element.
 	
 	//Include database connection details
 	require_once('config.php');
-
-	//Array to store validation errors
-	$errmsg_arr = array();
-	
-	//Validation error flag
-	$errflag = false;
 	
 	//Connect to mysql server
 	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
@@ -178,12 +172,12 @@ Your browser does not support the canvas element.
 	$result = @mysql_query($qry);
 	
 	}
-	//Check whether the query was successful or not
+	//Check whether the query was successful or not, datetime ASC
 	if($result) {
-		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC, datetime ASC";
+		$qryScore="SELECT * FROM leaderboard ORDER by user_score DESC";
 		$resultScore=mysql_query($qryScore);
 		$result_length = mysql_num_rows($resultScore);
-		$_SESSION['SESS_PLAYER_ID']=$result_length;
+		//$_SESSION['SESS_PLAYER_ID']=$result_length;
 		$lastScore=0;
 		$counter=0;
 ?>
@@ -197,19 +191,21 @@ Your browser does not support the canvas element.
 </tr>
 
 <?php
-	for($i = 1; $i <= $result_length; $i++){
+	//for($i = 1; $i <= $result_length; $i++){
+		$i=1;
+		while($row = mysql_fetch_array($resultScore)){
 		$counter++;
-		 $row = mysql_fetch_array($resultScore);
+		 
 		 
 		 if($row['user_score']==$lastScore){$i--;}
 		 
 		 //update rank_num
-		$sql = "UPDATE leaderboard SET rank_num='".$i."' where id='".$row['id']."'";
-		mysql_query($sql);
-		//$result=mysql_query("SELECT * FROM members WHERE id='".$_SESSION['SESS_MEMBER_ID']."'");//SQL
+		//$sql = "UPDATE leaderboard SET rank_num='".$i."' where id='".$row['id']."'";
+		//mysql_query($sql);
+		if($row['id']==$result_length) {$_SESSION['rankNum']=$i;}
 		
 		if($counter<15||$counter==15){	 
-		 //echo "<tr><tb>"$i."</tb><tb>".$row['user_name'] . "</tb><tb>" . $row['user_score'] . "</tb></tr>";
+		 
 ?>
 
 <tr>
@@ -221,21 +217,23 @@ Your browser does not support the canvas element.
 <?php
        }
 		 $lastScore=$row['user_score'];
+		 $i++;
 	}
 	?>
 	</table>
 	</div>
 	<?php
-	$resultID=mysql_query("SELECT * FROM leaderboard WHERE id='".$_SESSION['SESS_PLAYER_ID']."'");//SQL
+	/*$resultID=mysql_query("SELECT * FROM leaderboard WHERE id='".$_SESSION['SESS_PLAYER_ID']."'");//SQL
 	if($resultID) {
 			$row = mysql_fetch_array($resultID);
 			echo "<p>Your Rank:<br>".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
 		
-	}
-		//echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
+	}*/
+	echo "<p>Your Rank:<br>".$_SESSION['rankNum']."&nbsp;&nbsp;".$userName. "&nbsp;&nbsp;".$userScore."</p>";
+		////echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
 		unset($_POST["submit"]);
 		unset($_POST["userName"]);
-		//unset($_SESSION['scoreSES']);
+		unset($_SESSION['rankNum']);
 		unset($_COOKIE['scoreCookie']);
 		mysql_close();
 		exit();
