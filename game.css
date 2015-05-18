@@ -98,10 +98,9 @@ cursor: default;
 width:290px;
 max-height:270px;
 }
-#rankArea p{
-
-background-color:rgba(255,255,255,0.8);
-margin-top:20px;
+#rankArea #userRankDisplay{
+background-color:rgba(255,255,255,0.6);
+margin-top:15px;
 width:290px;
 height:45px;
 text-align:center;
@@ -111,6 +110,13 @@ padding-left:0px;
 font-family: Comic Sans MS, sans-serif;
 font-size: 19px;
 cursor: default;
+}
+#rankArea #userRankDisplay table{
+background-color:rgba(255,255,255,0.6);
+text-align:center;
+color: #01294d;
+cursor: default;
+width:290px;
 }
 #rules p{
 background-color:rgba(255,255,255,0.6);

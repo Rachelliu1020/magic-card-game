@@ -6,103 +6,106 @@
 <title>Magic Cards/leaderboard</title>
 <link rel="stylesheet" href="game.css">
 <script>
-    var ctx;
-    var canvas;
-    var buttonAudio;
-    var backgroundAudio;
-    var backButton;
-    var backClicked;
-    var soundAble = true;
+var ctx; 
+var canvas; 
+var buttonAudio;
+var backgroundAudio;
+var backButton;
+var backClicked;
+var soundAble=true;
 
-    function onloadPage() {
-        canvas = document.getElementById("myCav");
-        ctx = canvas.getContext("2d");
-        //background image;
-        backgroundImage = new Image();
-        backgroundImage.src = "image/background0.gif";
-        ctx.drawImage(backgroundImage, 0, 0);
-        checkAudioImage = setInterval(function () { checkReadyState(); }, 1000);
+function onloadPage(){
+	canvas = document.getElementById("myCav");
+	ctx = canvas.getContext("2d");
+	//background image;
+    backgroundImage=new Image();
+	backgroundImage.src="image/background0.gif";
+	ctx.drawImage(backgroundImage, 0, 0);
+	checkAudioImage = setInterval(function(){checkReadyState();},1000);
+ 
+	//start button
+	buttonX=100;
+	buttonY=420;
+	buttonWidth=128;
+	buttonHeight=41;
+	backButton=new Image();
+	backButton.src="image/backButton.png";
+	backClicked=new Image();
+	backClicked.src="image/backClicked.png";
+	
+	//pause soundAble in URL
+	//soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
+	//soundAble=((soundAble=="true"||soundAble=="")? true :false);
+	soundAble=((getCookie("soundCookie")=="true")? true :false);
+	//background audio
+	backgroundAudio = new Audio("sounds/homeBg.mp3");
+	backgroundAudio.loop = true;
+	backgroundAudio.volume = .25;
+	backgroundAudio.load();
+	if(soundAble){
+		backgroundAudio.play();
+	}else{
+		backgroundAudio.pause();
+	}
+	
+	//button audio 
+	buttonAudio = new Audio("sounds/buttonClick.mp3");
+	buttonAudio.loop = false;
+	buttonAudio.volume = .55;
+	buttonAudio.load();
+	
+}
 
-        //start button
-        buttonX = 100;
-        buttonY = 425;
-        buttonWidth = 128;
-        buttonHeight = 41;
-        backButton = new Image();
-        backButton.src = "image/backButton.png";
-        backClicked = new Image();
-        backClicked.src = "image/backClicked.png";
 
-        //pause soundAble in URL
-        //soundAble=decodeURIComponent(location.search.substr(location.search.indexOf("sound=")+6));
-        //soundAble=((soundAble=="true"||soundAble=="")? true :false);
-        soundAble = ((getCookie("soundCookie") == "true") ? true : false);
-        //background audio
-        backgroundAudio = new Audio("sounds/homeBg.mp3");
-        backgroundAudio.loop = true;
-        backgroundAudio.volume = .25;
-        backgroundAudio.load();
-        if (soundAble) {
-            backgroundAudio.play();
-        } else {
-            backgroundAudio.pause();
-        }
+function checkReadyState() {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && backButton.complete) {
+		checkAudioImage=clearInterval(checkAudioImage);
+		document.getElementById('loading').style.display = "none";
+		document.getElementById('rankArea').style.display = "block";
+		ctx.drawImage(backButton, buttonX, buttonY);
+		
+		//button listener
+		canvas.addEventListener('click', clickButton, false);
 
-        //button audio 
-        buttonAudio = new Audio("sounds/buttonClick.mp3");
-        buttonAudio.loop = false;
-        buttonAudio.volume = .55;
-        buttonAudio.load();
+	}
+}
+function clickButton(ev){
+var myX; 
+var myY; 
 
-    }
+// Firefox
+if (ev.layerX || ev.layerX == 0) {  
+myX = ev.layerX; 
+myY = ev.layerY; 
+// Opera
+} else if (ev.offsetX || ev.offsetX == 0) {  
+myX = ev.offsetX; 
+myY = ev.offsetY; 
+} 
+if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) 
+		{ 
+	if(soundAble) buttonAudio.play();
+	ctx.drawImage(backClicked, buttonX, buttonY);
+	setTimeout(function(){window.location.href="homepage.php";},500);
+	//setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
+	
+	}
 
-
-    function checkReadyState() {
-        if (backgroundAudio.readyState == 4 && buttonAudio.readyState == 4 && backgroundImage.complete && backButton.complete) {
-            checkAudioImage = clearInterval(checkAudioImage);
-            document.getElementById('loading').style.display = "none";
-            document.getElementById('rankArea').style.display = "block";
-            ctx.drawImage(backButton, buttonX, buttonY);
-
-            //button listener
-            canvas.addEventListener('click', clickButton, false);
-
-        }
-    }
-    function clickButton(ev) {
-        var myX;
-        var myY;
-
-        // Firefox
-        if (ev.layerX || ev.layerX == 0) {
-            myX = ev.layerX;
-            myY = ev.layerY;
-            // Opera
-        } else if (ev.offsetX || ev.offsetX == 0) {
-            myX = ev.offsetX;
-            myY = ev.offsetY;
-        }
-        if (myX > buttonX && myX < (buttonX + buttonWidth) && myY > buttonY && myY < (buttonY + buttonHeight)) {
-            if (soundAble) buttonAudio.play();
-            ctx.drawImage(backClicked, buttonX, buttonY);
-            setTimeout(function () { window.location.href = "homepage.php"; }, 500);
-            //setTimeout(function(){window.location.href="game.html?sound="+soundAble;},500);
-
-        }
-
-    }
-    function getCookie(cookieName) {
-        if (document.cookie.length > 0) {
-            cookieStart = document.cookie.indexOf(cookieName + "=");
-            if (cookieStart != -1) {
-                cookieStart = cookieStart + cookieName.length + 1;
-                cookieEnd = document.cookie.indexOf(";", cookieStart);
-                if (cookieEnd == -1) cookieEnd = document.cookie.length;
-                return unescape(document.cookie.substring(cookieStart, cookieEnd));
-            }
-        }
-        return "";
-    }
+}
+function getCookie(cookieName){
+	if (document.cookie.length>0)
+	{
+		cookieStart=document.cookie.indexOf(cookieName + "=");
+		if (cookieStart!=-1)
+		{
+			cookieStart=cookieStart + cookieName.length+1;
+			cookieEnd=document.cookie.indexOf(";",cookieStart);
+		if (cookieEnd==-1) cookieEnd=document.cookie.length;
+		return unescape(document.cookie.substring(cookieStart,cookieEnd));
+		}
+	}
+	return "";
+}
 </script>
 </head>
 
@@ -122,7 +125,7 @@ Your browser does not support the canvas element.
 <!--loading page-->
 <div id="loading">LOADING...<br><br>Please wait</div>
 
-<!--rules sentences-->
+<!--rank page-->
 <div id="rankArea">
 
 
@@ -178,7 +181,7 @@ Your browser does not support the canvas element.
 ?>
 <div id="tableArea2">
 <table border="0" align="center" bgcolor="#CCCCCC">
-<caption style="font-size:20px;font-weight:bold;margin-top:10px;">World's highest Scores</caption>
+<caption style="font-size:20px;font-weight:bold;margin-top:5px;">World's highest Scores</caption>
 <tr>
 <td align="center" bgcolor="#E6E6E6"><strong>Rank</strong></td>
 <td align="center" bgcolor="#E6E6E6"><strong>Name</strong></td>
@@ -219,7 +222,7 @@ Your browser does not support the canvas element.
 			echo "<p>Your Rank:<br>".$row['rank_num']."&nbsp;&nbsp;".$row['user_name']. "&nbsp;&nbsp;".$row['user_score']."</p>";
 		
 	}*/
-	echo "<p>Your Score:<br>".$_SESSION['rankNum']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$userName. "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$userScore."</p>";
+	echo "<div id='userRankDisplay'><table border='0' align='center' bgcolor='#CCCCCC'><caption>Your Current Rank:</caption><tr><td align='center' bgcolor='#FFFFFF'>".$_SESSION['rankNum']."</td><td align='center' bgcolor='#FFFFFF'>".$userName. "</td><td align='center' bgcolor='#FFFFFF'>".$userScore."</td></tr></table></div>";
 		////echo "<script>document.getElementById('submitScore').style.display='none'; window.history.go(-1);</script>";
 		unset($_POST["submit"]);
 		unset($_POST["userName"]);
