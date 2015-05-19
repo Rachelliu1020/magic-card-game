@@ -171,8 +171,7 @@ function setCookie(cookieName,cookieValue,expireDays){
 
 <body onload="onloadPage()">
 
-<canvas id="myCav" width="320" height="480"
-        style="border:1px solid #c3c3c3;">
+<canvas id="myCav" width="320" height="480" style="border:1px solid #c3c3c3;">
 Your browser does not support the canvas element.
 </canvas>
 
@@ -197,11 +196,11 @@ About
 </p> 
 <p>
 Magic Card<br>
-Version 1.1.5<br>
+Version 1.4.7<br>
 Coryright &copy; 2015 Magician.
 </p>
 <p>
-Project Magager:<br>
+Project Manager:<br>
 Cui Liu
 </p>
 <p>
