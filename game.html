@@ -644,6 +644,16 @@ function onloadPage(){
 		document.getElementById("sound").src="image/nosound.png";
 		numClickSound=1;
 	}
+	//achievement
+	firstAward=getCookie('3000score');
+	secondAward=getCookie('5000score');
+	thirdAward=getCookie('pass10Level');
+	fourthAward=getCookie('fullScore');
+	
+	if (firstAward==1){document.getElementById("3000score").src="image/2000Score3.png";document.getElementById("3000scoreCL").src="image/2000Score3.png";}
+	if (secondAward==1){document.getElementById("5000score").src="image/4000Score3.png";document.getElementById("5000scoreCL").src="image/4000Score3.png";}
+	if (thirdAward==1){document.getElementById("pass10LevelCL").src="image/allLevel3.png";document.getElementById("pass10Level").src="image/allLevel3.png";}
+	if (fourthAward==1){document.getElementById("fullScoreCL").src="image/fullScore3.png";document.getElementById("fullScore").src="image/fullScore3.png";}
 	
 	//background audio
 	backgroundAudio = new Audio("sounds/gamingBg.mp3");
@@ -710,6 +720,7 @@ function checkReadyState() {
 
 }
 function initial(){
+/*
 firstAward=0;
 secondAward=0;
 thirdAward=0;
@@ -717,7 +728,7 @@ fourthAward=0;
 document.getElementById("3000score").src="image/2000Score2.png";
 document.getElementById("5000score").src="image/4000Score2.png";
 document.getElementById("pass10Level").src="image/allLevel2.png";
-document.getElementById("fullScore").src="image/fullScore2.png";
+document.getElementById("fullScore").src="image/fullScore2.png";*/
 ctx.clearRect(0,0,320,480);
 ctx.drawImage(backgroundImage, 0, 0);
 ctx.drawImage(backgroundLevel, 0, 0);
