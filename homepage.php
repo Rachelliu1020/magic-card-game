@@ -344,10 +344,10 @@ magician0015@gmail.com
 <div id="achvPage">
 <div id="achvContent">
 <p style="font-size:25px;font-weight:bold;margin-top:10px;">Achievement History</p>
-<img id="3000score" src="image/2000Score0.png" alt="3000 score" width="74" height="75" ><div class="achvExplain">if you get 3000score,you will get this.</div>
-<img id="5000score" src="image/4000Score0.png" alt="5000 score" width="74" height="75"><div class="achvExplain">this is second pc 5000 score</div>
-<img id="pass10Level" src="image/allLevel0.png" alt="pass 10 level" width="74" height="75"><div class="achvExplain">this is third pc pass 10 level</div>
-<img id="fullScore" src="image/fullScore0.png" alt="full score" width="74" height="75"><div class="achvExplain">this is fourth pc full score</div>
+<img id="3000score" src="image/2000Score0.png" alt="3000 score" width="74" height="75" ><div class="achvExplain">You Got It!<br><br>Get 2000 scores</div>
+<img id="5000score" src="image/4000Score0.png" alt="5000 score" width="74" height="75"><div class="achvExplain">A Great Breakthrough!<br><br>Get 4000 scores</div>
+<img id="pass10Level" src="image/allLevel0.png" alt="pass 10 level" width="74" height="75"><div class="achvExplain">The Secret of Memory...<br><br>Pass 10 levels</div>
+<img id="fullScore" src="image/fullScore0.png" alt="full score" width="74" height="75"><div class="achvExplain">Unbelievably Fast!<br><br> Get full score: 8050</div>
 </div>
 <img class="backButton" id="backButton3" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton3').src='image/backClicked.png';
    setTimeout(function(){

@@ -182,10 +182,11 @@ float:left;
 }
 
 #achvPage #achvContent .achvExplain{
-margin-left:80px;
-width:150px;
-height:75px;
-border:1px solid #ff0000;
+margin-left:70px;
+width:180px;
+height:70px;
+margin-bottom:10px;
+background-color:white;
 }
 /*about page*/
 #about {
