@@ -5,23 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Cards/homepage</title>
 <link rel="stylesheet" href="game.css" media="only all and (min-width:320px)">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <script>
 var ctx; 
 var canvas; 
 var buttonAudio;
 var backgroundAudio;
 var backgroundImage;
-var pic1;
+var achvButton;
 var scoreButton;
 var aboutButton;
 var soundButton;
 
 var playClicked;
+//achievement 
+var firstAward=0;
+var secondAward=0;
+var thirdAward=0;
+var fourthAward=0;
 //play button 
 var buttonX=62;
 var buttonY=395;
 var buttonWidth=192;
 var buttonHeight=52;
+//achievement button
+var achvButtonX=62;
+var achvButtonY=140;
+var achvButtonWidth=95;
+var achvButtonHeight=95;
 //sound button
 var soundButtonX=162;
 var soundButtonY=240;
@@ -53,8 +65,8 @@ function onloadPage(){
 	gameName.src="image/gameName.png";
 	 
 	//magic card pictures
-	pic1=new Image();
-	pic1.src="image/bomb.png";
+	achvButton=new Image();
+	achvButton.src="image/achievement.png";
 
 	scoreButton=new Image();
 	scoreButton.src="image/score.png";
@@ -90,13 +102,30 @@ function onloadPage(){
 	checkAudioImage = setInterval(function(){checkReadyState();},1000);
 	
 	setCookie("soundCookie",soundAble,365);
+	
+	firstAward=getCookie('3000score');
+	secondAward=getCookie('5000score');
+	thirdAward=getCookie('pass10Level');
+	fourthAward=getCookie('fullScore');
+	if(firstAward==1){
+		document.getElementById("3000score").src="image/2000Score1.png";	
+	}	
+	if(secondAward==1){
+		document.getElementById("5000score").src="image/4000Score1.png";	
+	}
+	if(thirdAward==1){
+		document.getElementById("pass10Level").src="image/allLevel1.png";	
+	}
+	if(fourthAward==1){
+		document.getElementById("fullScore").src="image/fullScore1.png";	
+	}
 }
 function checkReadyState() {
-	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && pic1.complete && scoreButton.complete && aboutButton.complete && soundButton.complete && nosoundButton.complete&&document.getElementById("backButton").complete) {
+	if ( backgroundAudio.readyState==4 && buttonAudio.readyState == 4 && backgroundImage.complete && achvButton.complete && scoreButton.complete && aboutButton.complete && soundButton.complete && nosoundButton.complete&&document.getElementById("backButton").complete) {
 		checkAudioImage=clearInterval(checkAudioImage);
 		document.getElementById('loading').style.display = "none";
 		ctx.drawImage(gameName, 15, 40);
-		ctx.drawImage(pic1, 62, 140);
+		ctx.drawImage(achvButton, achvButtonX, achvButtonY);
 		ctx.drawImage(scoreButton, scoreButtonX, scoreButtonY);
 		ctx.drawImage(aboutButton, aboutButtonX, aboutButtonY);
 		ctx.drawImage(soundButton, soundButtonX, soundButtonY);
@@ -156,6 +185,12 @@ if (myX > scoreButtonX && myX < (scoreButtonX + scoreButtonWidth) && myY > score
 	if(soundAble) buttonAudio.play();
 	document.getElementById('scorePage').style.display='block';
 	}
+		//click achievement button image
+if (myX > achvButtonX && myX < (achvButtonX + achvButtonWidth) && myY > achvButtonY && myY < (achvButtonY + achvButtonHeight)){ 
+	if(soundAble) buttonAudio.play();
+	document.getElementById('achvPage').style.display='block';
+	}
+	
 }
 
 
@@ -165,7 +200,20 @@ function setCookie(cookieName,cookieValue,expireDays){
 	document.cookie=cookieName+ "=" +escape(cookieValue)+
 	((expireDays==null) ? "" : ";expires="+exdate.toGMTString());
 }
-
+function getCookie(cookieName){
+	if (document.cookie.length>0)
+	{
+		cookieStart=document.cookie.indexOf(cookieName + "=");
+		if (cookieStart!=-1)
+		{
+			cookieStart=cookieStart + cookieName.length+1;
+			cookieEnd=document.cookie.indexOf(";",cookieStart);
+			if (cookieEnd==-1) cookieEnd=document.cookie.length;
+			return unescape(document.cookie.substring(cookieStart,cookieEnd));
+		}
+	}
+	return "";
+}
 </script>
 </head>
 
@@ -189,6 +237,8 @@ Your browser does not support the canvas element.
 
 <div id="loading">LOADING...<br><br>Please wait</div>
 
+
+
 <!--about page-->
 <div id="about">
 <div id="aboutContent">
@@ -197,11 +247,11 @@ About
 </p> 
 <p>
 Magic Card<br>
-Version 1.1.5<br>
+Version 1.4.7<br>
 Coryright &copy; 2015 Magician.
 </p>
 <p>
-Project Magager:<br>
+Project Manager:<br>
 Cui Liu
 </p>
 <p>
@@ -287,6 +337,25 @@ magician0015@gmail.com
 		document.getElementById('backButton2').src='image/backButton.png';
 				},500);">
 </div>
+
+
+
+<!--achievement page-->
+<div id="achvPage">
+<div id="achvContent">
+<p style="font-size:25px;font-weight:bold;margin-top:10px;">Achievement History</p>
+<img id="3000score" src="image/2000Score0.png" alt="3000 score" width="74" height="75" ><div class="achvExplain">if you get 3000score,you will get this.</div>
+<img id="5000score" src="image/4000Score0.png" alt="5000 score" width="74" height="75"><div class="achvExplain">this is second pc 5000 score</div>
+<img id="pass10Level" src="image/allLevel0.png" alt="pass 10 level" width="74" height="75"><div class="achvExplain">this is third pc pass 10 level</div>
+<img id="fullScore" src="image/fullScore0.png" alt="full score" width="74" height="75"><div class="achvExplain">this is fourth pc full score</div>
+</div>
+<img class="backButton" id="backButton3" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton3').src='image/backClicked.png';
+   setTimeout(function(){
+		document.getElementById('achvPage').style.display='none';
+		document.getElementById('backButton3').src='image/backButton.png';
+				},500);">
+</div>
+
 </body>
 
 </html>

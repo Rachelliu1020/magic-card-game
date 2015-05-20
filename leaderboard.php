@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magic Cards/leaderboard</title>
-<link rel="stylesheet" href="game.css">
+<link rel="stylesheet" href="game.css" media="only all and (min-width:320px)">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <script>
 var ctx; 
 var canvas; 

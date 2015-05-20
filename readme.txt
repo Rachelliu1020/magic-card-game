@@ -2,13 +2,17 @@ Magic Card
 
 Group 6 - Rui Liu, Lingzhu Yu, Cui Liu, Jing Yang, Kwanchanok Sonsoi 
 
+Leaderboard:
 
-Please see homepage.html -> rulesPage.html -> game.html
+We add leaderboard in 2 places: homepage.php->score button, and leaderboard.php (after game over or all cleared division, players can submit their scores to database, and jump intoleaderboard.php to show the leaderboard table, and display the players' current rank).
 
-Homepage has sound control button and can deliver the sound control varible to other pages with Cookie. 
-Therefore, other pages can control the sound depending on this varible. 
+1. Homepage.php: 
+click the score button to show the first 15 players' scores
 
-There is also a sound control button in game page -> pause button division.
+2. Leaderboard.php:
+In game.html, when game over or all cleared, there will show a page for players to enter their name and submit their scores. If the players do not want to input their name, the server will set a default name "Guest" and submit the score.
 
-Click on the sound control button in homepage or in game page -> pause button division (game page -> pause button, the sound button is in this pause division), the background sound, button sound and card sound will be muted, and the sound button image will be changed to a no-sound button image.
+The leaderboard.php will show the first 15 players'score rank table, and also the current players' rank number, score and name.
+
+We implement all leaderboard function by using PHP and SQL.
 
