@@ -5,10 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>game</title>
 <link rel="stylesheet" href="game.css" media="only all and (min-width:320px)">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <script>
 
 var ctx; 
 var canvas;
+//achievement 
+var firstAward=0;
+var secondAward=0;
+var thirdAward=0;
+var fourthAward=0;
 //set the number of bomb and magic cards
 var numBomb=1;
 var numMCard=3;
@@ -476,6 +483,16 @@ function clickCard(ev){
 		//the card is bomb
 		if (card.bomb==1){ 
 			isPassed=false;
+			if(score>=2000){
+			firstAward=1;
+			document.getElementById("3000score").src="image/2000Score3.png";
+			setCookie('3000score',firstAward,7);
+			}
+			if(score>=4000){
+			secondAward=1;
+			document.getElementById("5000score").src="image/4000Score3.png";
+			setCookie('5000score',secondAward,7);
+			}
 			gameOver(isPassed);
 			for(var j = 0; j < matrix.length; j++){
 			matrix[j].bomb=2;
@@ -570,6 +587,24 @@ function clickCard(ev){
 							
 						},1500);
 				}else if(level==10){
+					thirdAward=1;
+					document.getElementById("pass10LevelCL").src="image/allLevel3.png";
+					setCookie('pass10Level',thirdAward,7);
+					if(score>=2000){
+						firstAward=1;
+						document.getElementById("3000scoreCL").src="image/2000Score3.png";
+						setCookie('3000score',firstAward,7);
+					}
+					if(score>=4000){
+						secondAward=1;
+						document.getElementById("5000scoreCL").src="image/4000Score3.png";
+						setCookie('5000score',secondAward,7);
+					}
+					if(score>=8050){
+						fourthAward=1;
+						document.getElementById("fullScoreCL").src="image/fullScore3.png";
+						setCookie('fullScore',fourthAward,7);
+					}
 					allCleared(isPassed);
 				}
 		
@@ -675,7 +710,14 @@ function checkReadyState() {
 
 }
 function initial(){
-
+firstAward=0;
+secondAward=0;
+thirdAward=0;
+fourthAward=0;
+document.getElementById("3000score").src="image/2000Score2.png";
+document.getElementById("5000score").src="image/4000Score2.png";
+document.getElementById("pass10Level").src="image/allLevel2.png";
+document.getElementById("fullScore").src="image/fullScore2.png";
 ctx.clearRect(0,0,320,480);
 ctx.drawImage(backgroundImage, 0, 0);
 ctx.drawImage(backgroundLevel, 0, 0);
@@ -845,8 +887,10 @@ Your browser does not support the canvas element.
 <div class="timer">Time: <span id="timer">0:0</span></div>
 <div class="score">Scores: <span id="score">0</span></div>
 <!--game over page-->
+
 <div id="gameOver">
-<p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span></span>
+<p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span><br>
+Your Achievement: <br><img id="3000score" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000score" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10Level" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScore" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
 <br><img src="image/uploadscore.png" style="margin-top:15px;" alt="submit scores" width="180" height="41" onclick="
 
 document.getElementById('gameOver').style.display='none';
@@ -906,7 +950,7 @@ else{document.getElementById('gameOver').style.display='block';}
 
 <!--all cleared page-->
 <div id="allCleared">
-<p>ALL CLEARED!!!<br> <span>Your Score: <span id="scoreAllCleared"></span></span>
+<p>ALL CLEARED!!!<br> <span>Your Score: <span id="scoreAllCleared"></span><br>Your Achievement: <br><img id="3000scoreCL" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000scoreCL" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10LevelCL" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScoreCL" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
 <br><img src="image/uploadscore.png" style="margin-top:15px;" alt="submit scores" width="180" height="41" onclick="
 document.getElementById('allCleared').style.display='none';
 document.getElementById('scoreDisplay').innerHTML=score;
