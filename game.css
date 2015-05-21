@@ -133,7 +133,7 @@ font-weight:bold;
 font-size: 24px;
 cursor: default;
 }
-#gameOver,#pause,#stop,#allCleared{
+#gameOver,#pause,#stop, #allCleared{
 position: absolute;
 background-color:rgba(0,0,0,0.6);
 top: 0px;

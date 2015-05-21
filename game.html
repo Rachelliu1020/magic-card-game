@@ -246,7 +246,7 @@ function createMatrix(level){
 			card.draw();
 		}		
 		break;	
-	//Level 5: 5*5 matrix, 3 bomb, 22 Magic Cards
+//Level 5: 5*5 matrix, 3 bomb, 22 Magic Cards
 	case 5: 
 		firstX=28;
 		firstY=93;
@@ -644,16 +644,28 @@ function onloadPage(){
 		document.getElementById("sound").src="image/nosound.png";
 		numClickSound=1;
 	}
-	//achievement
+	//achievement initialization
 	firstAward=getCookie('3000score');
 	secondAward=getCookie('5000score');
 	thirdAward=getCookie('pass10Level');
 	fourthAward=getCookie('fullScore');
 	
-	if (firstAward==1){document.getElementById("3000score").src="image/2000Score3.png";document.getElementById("3000scoreCL").src="image/2000Score3.png";}
-	if (secondAward==1){document.getElementById("5000score").src="image/4000Score3.png";document.getElementById("5000scoreCL").src="image/4000Score3.png";}
-	if (thirdAward==1){document.getElementById("pass10LevelCL").src="image/allLevel3.png";document.getElementById("pass10Level").src="image/allLevel3.png";}
-	if (fourthAward==1){document.getElementById("fullScoreCL").src="image/fullScore3.png";document.getElementById("fullScore").src="image/fullScore3.png";}
+	if (firstAward==1){
+		document.getElementById("3000score").src="image/2000Score3.png";
+		document.getElementById("3000scoreCL").src="image/2000Score3.png";
+	}
+	if (secondAward==1){
+		document.getElementById("5000score").src="image/4000Score3.png";
+		document.getElementById("5000scoreCL").src="image/4000Score3.png";
+	}
+	if (thirdAward==1){
+		document.getElementById("pass10LevelCL").src="image/allLevel3.png";
+		document.getElementById("pass10Level").src="image/allLevel3.png";
+	}
+	if (fourthAward==1){
+		document.getElementById("fullScoreCL").src="image/fullScore3.png";
+		document.getElementById("fullScore").src="image/fullScore3.png";
+	}
 	
 	//background audio
 	backgroundAudio = new Audio("sounds/gamingBg.mp3");
@@ -900,8 +912,7 @@ Your browser does not support the canvas element.
 <!--game over page-->
 
 <div id="gameOver">
-<p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span><br>
-Your Achievement: <br><img id="3000score" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000score" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10Level" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScore" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
+<p>GAME OVER<br> <span >Your Score: <span id="scoreGameOver"></span>
 <br><img src="image/uploadscore.png" style="margin-top:15px;" alt="submit scores" width="180" height="41" onclick="
 
 document.getElementById('gameOver').style.display='none';
@@ -909,7 +920,9 @@ document.getElementById('scoreDisplay').innerHTML=score;
 setCookie('scoreCookie',score,365);
 document.getElementById('submitScore').style.display='block';
 
-"></p>
+">
+<br>Your Unlocked Achievement: <br><img id="3000score" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000score" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10Level" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScore" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
+</p>
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){
 document.getElementById('gameOver').style.display='none';
 gameOverAudio.pause();
@@ -961,7 +974,7 @@ else{document.getElementById('gameOver').style.display='block';}
 
 <!--all cleared page-->
 <div id="allCleared">
-<p>ALL CLEARED!!!<br> <span>Your Score: <span id="scoreAllCleared"></span><br>Your Achievement: <br><img id="3000scoreCL" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000scoreCL" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10LevelCL" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScoreCL" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
+<p>ALL CLEARED!!!<br> <span>Your Score: <span id="scoreAllCleared"></span>
 <br><img src="image/uploadscore.png" style="margin-top:15px;" alt="submit scores" width="180" height="41" onclick="
 document.getElementById('allCleared').style.display='none';
 document.getElementById('scoreDisplay').innerHTML=score;
@@ -969,6 +982,8 @@ setCookie('scoreCookie',score,365);
 document.getElementById('submitScore').style.display='block';
 
 ">
+<br>Your Unlocked Achievement: <br><img id="3000scoreCL" src="image/2000Score2.png" alt="3000 score" width="49" height="50" ><img id="5000scoreCL" src="image/4000Score2.png" alt="5000 score" width="49" height="50" ><img id="pass10LevelCL" src="image/allLevel2.png" alt="pass 10 level" width="49" height="50" ><img id="fullScoreCL" src="image/fullScore2.png" alt="full score" width="49" height="50" ></span>
+
 </p>
 <img class="leftButton" src="image/restartButton.png" alt="restart button" width="100" height="41" onclick="if (soundAble) buttonAudio.play();setTimeout(function(){
 document.getElementById('allCleared').style.display='none';
