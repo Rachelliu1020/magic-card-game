@@ -247,7 +247,7 @@ About
 </p> 
 <p>
 Magic Card<br>
-Version 1.4.7<br>
+Version 1.5.7<br>
 Coryright &copy; 2015 Magician.
 </p>
 <p>
@@ -343,11 +343,11 @@ magician0015@gmail.com
 <!--achievement page-->
 <div id="achvPage">
 <div id="achvContent">
-<p style="font-size:25px;font-weight:bold;margin-top:10px;">Achievement History</p>
-<img id="3000score" src="image/2000Score0.png" alt="3000 score" width="74" height="75" ><div class="achvExplain">You Got It!<br><br>Get 2000 scores</div>
-<img id="5000score" src="image/4000Score0.png" alt="5000 score" width="74" height="75"><div class="achvExplain">A Great Breakthrough!<br><br>Get 4000 scores</div>
-<img id="pass10Level" src="image/allLevel0.png" alt="pass 10 level" width="74" height="75"><div class="achvExplain">The Secret of Memory...<br><br>Pass 10 levels</div>
-<img id="fullScore" src="image/fullScore0.png" alt="full score" width="74" height="75"><div class="achvExplain">Unbelievably Fast!<br><br> Get full score: 8050</div>
+<p style="font-size:26px;font-weight:bold;margin-top: 8px;margin-bottom: 18px;padding-bottom: 0px;">Achievements</p>
+<img id="fullScore" src="image/fullScore0.png" alt="full score" width="74" height="75"><div class="achvExplain"><div id="title">Unbelievably Fast!</div><div id="content">Get full score: 8050</div></div>
+<img id="pass10Level" src="image/allLevel0.png" alt="pass 10 level" width="74" height="75"><div class="achvExplain"><div id="title">The Secret of Memory.</div><div id="content">Passed all 10 levels</div></div>
+<img id="5000score" src="image/4000Score0.png" alt="5000 score" width="74" height="75"><div class="achvExplain"><div id="title">Breakthrough!</div><div id="content">Get 4000 points</div></div>
+<img id="3000score" src="image/2000Score0.png" alt="3000 score" width="74" height="75" ><div class="achvExplain"><div id="title">You Got It!</div><div id="content">Get 2000 points</div></div>
 </div>
 <img class="backButton" id="backButton3" src="image/backButton.png" alt="no button" width="128" height="41" onclick="if (soundAble) buttonAudio.play(); document.getElementById('backButton3').src='image/backClicked.png';
    setTimeout(function(){
