@@ -1,14 +1,14 @@
 @font-face {
     font-family:'Comic Sans MS';
-    src:url(BRLNSDB.TTF);
+    src:url(../BRLNSDB.TTF);
 }
 @font-face {
     font-family:'Hobo Std';
-    src:url(HoboStd.otf);
+    src:url(../HoboStd.otf);
 }
-@media screen and (min-device-width:413px){
+@media (max-device-width:413px) and (min-device-width:360px){
 body {
-background-image: url("image/background3.gif");
+background-image: url("../image/background2.gif");
 background-position: center top;
 background-repeat: no-repeat         
 }
@@ -20,7 +20,6 @@ position: absolute;
 top: 0px;
 left: 0px;
 right:0px;
-
 background: transparent;
 overflow:hidden;
 }
@@ -126,7 +125,7 @@ display: none;
 }	
 #about{
 position: absolute;
-background-image:url(image/background0.gif);
+background-image:url(../image/background0.gif);
 background-position:0 0;
 background-repeat:no-repeat;
 top: 0px;
@@ -139,7 +138,7 @@ display: none;
 }	
 #scorePage {
 position: absolute;
-background-image:url(image/background0.gif);
+background-image:url(../image/background0.gif);
 background-position:0 0;
 background-repeat:no-repeat;
 top: 0px;
